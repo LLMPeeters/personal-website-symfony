@@ -4,12 +4,20 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/.env.local" />
+          <option name="caretOffset" value="595" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/login/index.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1465" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/.env" />
+          <option name="caretOffset" value="309" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/PortfolioController.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="754" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/config/packages/security.yaml" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="795" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/LoginController.php" />
         </OpenedFileInfo>
       </list>
     </option>
