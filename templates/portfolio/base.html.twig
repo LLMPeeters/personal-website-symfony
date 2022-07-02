@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Lester Peeters—{% block title %}Welkom!{% endblock %}</title>
+
+    {# <link rel="icon" type="image/png" href="/images/favicon.ico"> #}
+    {# <script type="module" src="/js/main.js" defer=""></script> #}
+    {# <link rel="alternate" href="https://www.llmpeeters.nl/" hreflang="nl-NL"> #}
+    {# <link rel="alternate" href="https://www.llmpeeters.com/" hreflang="en"> #}
+
+    {% block meta_tags %}
+        <meta name="description" content="Dit is mijn, Lesters, website! Hier kun je vinden wie ik ben en wat ik doe.">
+
+        <meta property="og:title" content="Lester Peeters—Welkom!">
+        <meta property="og:url" content="https://llmpeeters.nl/">
+
+        <meta property="twitter:title" content="Lester Peeters—Welkom!">
+        <meta property="twitter:description" content="Dit is mijn, Lesters, website! Hier kun je vinden wie ik ben en wat ik doe.">
+        <meta property="twitter:card" content="summary_large_image">
+    {% endblock %}
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+
+    {% block json_ld %}
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org/",
+                "@type": "Person",
+                "jobTitle": "Student",
+                "name": "Lester Peeters",
+                "telephone": "+31 6 14 82 79 07",
+                "url": "https://llmpeeters.com",
+                "sameAs": "https://linkedin.com/in/llmpeeters"
+            }
+        </script>
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        {% block header %}
+            <div id="inner-header">
+                <div id="header-bg-back"></div>
+                <div id="header-bg-front"></div>
+
+                <div class="widget-contact">
+                    <div>
+                        <div><h2>CONTACT</h2></div>
+                        <div></div>
+                    </div>
+
+                    <div>
+                        <p>Tel: <a target="_BLANK" href="tel:31614827907">+31 6 14 82 79 07</a></p>
+                        <p>Email: <a target="_BLANK" href="mailto:llmpeeters@gmail.com">LLMPeeters@gmail.com</a></p>
+                        <p>Linkedin: <a target="_BLANK" href="https://linkedin.com/in/llmpeeters">linkedin.com/in/llmpeeters</a></p>
+                    </div>
+                </div>
+
+                <div id="header-buttons">
+                </div>
+
+                <div id="header-text">
+                    <h1>Lester Peeters</h1>
+                    <p>Webontwikkelaar</p>
+
+                    <p class="language-select"></p>
+                </div>
+            </div>
+        {% endblock %}
+    </header>
+
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+            <section class="content">
+                <h2>Heading</h2>
+
+                <ul>
+                    <li>List item</li>
+                </ul>
+            </section>
+
+            <section class="content">
+                <h2>Heading</h2>
+
+                <ul>
+                    <li>List item</li>
+                </ul>
+            </section>
+            <section class="content">
+                <h2>Contact Informatie</h2>
+
+                <ul>
+                    <li>Tel: <a target="_BLANK" href="tel:31614827907">+31 6 14 82 79 07</a></li>
+                    <li>Email: <a target="_BLANK" href="mailto:llmpeeters@gmail.com">LLMPeeters@gmail.com</a></li>
+                    <li>Linkedin: <a target="_BLANK" href="https://linkedin.com/in/llmpeeters">linkedin.com/in/llmpeeters</a></li>
+                    <li>© Lester Peeters 2019 - {{ 'now'|date('Y') }}</li>
+                </ul>
+            </section>
+        {% endblock %}
+    </footer>
+</body>
+</html>
