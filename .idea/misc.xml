@@ -5,7 +5,11 @@
       <list>
         <OpenedFileInfo>
           <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/phpunit.xml.dist" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/.env.local" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1465" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/.env" />
         </OpenedFileInfo>
       </list>
     </option>
