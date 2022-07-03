@@ -8,8 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PortfolioController extends AbstractController
 {
-    #[Route('/', name: 'app_portfolio')]
-    public function index(): Response
+    #[Route('/{route}', name: 'app_portfolio', requirements: ['route' => '^(?!api|admin)[a-zA-Z_\/]*$'])]
+    public function index(string $route): Response
     {
         return $this->render('portfolio/index.html.twig', [
             'controller_name' => 'PortfolioController',

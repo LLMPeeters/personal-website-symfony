@@ -5,10 +5,33 @@
 {% block main %}
 <h1>Hello!</h1>
 
-{% for page in pages %}
-    <p>Page</p>
+{% if pages|length > 0 %}
+    <table>
+        <thead>
+            <tr class="bg-light">
+                <th class="border">Page name</th>
+                <th class="border">Page route</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for page in pages %}
+                <tr>
+                    <td class="border p-1">
+                        <a href="{{ path('admin_simple_text_page_read', {id: page.id}) }}" target="_SELF">{{ page.name }}</a>
+                    </td>
+                    <td class="border p-1">
+                        <a href="/{{ page.route }}" target="_BLANK">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                            {{ page.route }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% else %}
     <p>There are no pages yet.</p>
-{% endfor %}
+{% endif %}
 
 {% endblock %}

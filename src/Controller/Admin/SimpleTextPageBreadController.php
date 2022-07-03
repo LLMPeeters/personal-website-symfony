@@ -2,10 +2,14 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\SimpleTextPage;
 use App\Repository\SimpleTextPageRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Component\Pages\FormType\SimpleTextPageType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/simple_text_page')]
 class SimpleTextPageBreadController extends AbstractController
@@ -20,11 +24,11 @@ class SimpleTextPageBreadController extends AbstractController
         ]);
     }
     
-    #[Route('/read', name: 'admin_simple_text_page_read')]
-    public function read(): Response
+    #[Route('/read/{id}', name: 'admin_simple_text_page_read')]
+    public function read(SimpleTextPage $page): Response
     {
         return $this->render('admin/simple_text_page_bread/read.html.twig', [
-            
+            'page' => $page,
         ]);
     }
     
@@ -37,10 +41,22 @@ class SimpleTextPageBreadController extends AbstractController
     }
     
     #[Route('/add', name: 'admin_simple_text_page_add')]
-    public function add(): Response
+    public function add(Request $request, EntityManagerInterface $em): Response
     {
-        return $this->render('admin/simple_text_page_bread/add.html.twig', [
+        $page = new SimpleTextPage();
+        $form = $this->createForm(SimpleTextPageType::class, $page);
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()) {
+            $em->persist($page);
+            $em->persist($page->getHotlink());
+            $em->flush();
             
+            return $this->redirectToRoute('admin_simple_text_page_read', ['id' => $page->getId()]);
+        }
+        
+        return $this->render('admin/simple_text_page_bread/add.html.twig', [
+            'add_form' => $form->createView(),
         ]);
     }
     

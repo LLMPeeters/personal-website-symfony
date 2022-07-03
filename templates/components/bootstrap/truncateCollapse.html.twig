@@ -1,0 +1,17 @@
+{% set random = random() %}
+{% if maxWidth is defined %}
+    <section class="m-1" style="max-width: {{ maxWidth }};">
+{% else %}
+        <section class="m-1">
+{% endif %}
+    <div>
+        <button class="btn btn-primary w-100 text-truncate" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ title~random|capitalize }}" aria-expanded="false" aria-controls="collapse{{ title~random|capitalize }}">
+            {{ title }}: {{ content }}
+        </button>
+    </div>
+    <div class="collapse" id="collapse{{ title~random|capitalize }}">
+        <div class="card card-body">
+            {{ content }}
+        </div>
+    </div>
+</section>
