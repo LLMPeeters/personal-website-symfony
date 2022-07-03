@@ -5,4 +5,11 @@
 {% block main %}
 <h1>Hello!</h1>
 
+{{ form_start(add_form) }}
+
+{{ form_row(add_form) }}
+
+<input type="submit" value="Create page">
+{{ form_end(add_form) }}
+
 {% endblock %}
