@@ -6,19 +6,39 @@
         <title>{% block title %}Admin{% endblock %}</title>
 
         {% block stylesheets %}
-
+            {{ encore_entry_link_tags('bootstrap') }}
         {% endblock %}
 
         {% block javascripts %}
-
+            {{ encore_entry_script_tags('bootstrap') }}
         {% endblock %}
     </head>
 
     <body>
-        <nav>
-            <ul>
-                <li><a href="{{ path('app_admin') }}">Index</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('app_admin') }}">Admin</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarBurger" aria-controls="navbarBurger" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarBurger">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="simpleTextPagesNav" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Simple Text Pages
+                            </a>
+                            
+                            <ul class="dropdown-menu" aria-labelledby="simpleTextPagesNav">
+                                <li><a class="nav-link" href="{{ path('admin_simple_text_page_browse') }}"><strong>B</strong>rowse</a></li>
+                                <li><a class="nav-link" href="{{ path('admin_simple_text_page_read') }}"><strong>R</strong>ead</a></li>
+                                <li><a class="nav-link" href="{{ path('admin_simple_text_page_edit') }}"><strong>E</strong>dit</a></li>
+                                <li><a class="nav-link" href="{{ path('admin_simple_text_page_add') }}"><strong>A</strong>dd</a></li>
+                                <li><a class="nav-link" href="{{ path('admin_simple_text_page_delete') }}"><strong>d</strong>elete</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
 
         <main>

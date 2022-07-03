@@ -4,28 +4,12 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="272" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/Admin/AdminController.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="548" />
+          <option name="caretOffset" value="0" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/admin/base.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="348" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Hotlink.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="660" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/User.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="338" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/AbstractPage.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/SimpleTextPage.php" />
+          <option name="caretOffset" value="512" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/Admin/SimpleTextPageBreadController.php" />
         </OpenedFileInfo>
       </list>
     </option>
