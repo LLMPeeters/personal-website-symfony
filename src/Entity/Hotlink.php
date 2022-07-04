@@ -15,13 +15,16 @@ class Hotlink
     private $id;
 
     #[Assert\Regex(
-        pattern: '/^[a-zA-Z_]+$/',
+        pattern: '/^[a-zA-Z_\/]+$/',
         match: true,
         message: 'A hotlink route can only contain letters and underscores.',
     )]
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $route;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $pageNamespace;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -34,7 +37,23 @@ class Hotlink
 
     public function setRoute(string $route): self
     {
+        if(preg_match('/^\//', $route)) {
+            $route = substr($route, 1);
+        }
+        
         $this->route = $route;
+
+        return $this;
+    }
+
+    public function getPageNamespace(): ?string
+    {
+        return $this->pageNamespace;
+    }
+
+    public function setPageNamespace(string $pageNamespace): self
+    {
+        $this->pageNamespace = $pageNamespace;
 
         return $this;
     }

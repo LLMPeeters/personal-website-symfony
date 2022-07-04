@@ -3,9 +3,17 @@
 {% block title %}Browse pages{% endblock %}
 
 {% block main %}
-    <h1>Hello!</h1>
+    <h1>Details</h1>
 
     <section>
+        <p>
+            <a href="{{ path('admin_simple_text_page_edit', {id: page.id}) }}" target="_SELF">
+                <span><i class="fa-solid fa-pencil"></i> Edit</span>
+            </a>
+            <a href="{{ path('admin_simple_text_page_delete', {id: page.id}) }}" target="_SELF">
+                <span><i class="fa-solid fa-trash"></i> Delete</span>
+            </a>
+        </p>
         <p>Title: {{ page.title }}</p>
         <p>Name: {{ page.name }}</p>
         <p>Route: {{ page.route }}</p>
@@ -13,6 +21,5 @@
             Raw HTML:
             {% include 'components/bootstrap/modal.html.twig' with {title: 'HTML', content: page.rawHtml} %}
         </p>
-        
     </section>
 {% endblock %}

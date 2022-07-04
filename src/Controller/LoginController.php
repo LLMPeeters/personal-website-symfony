@@ -12,6 +12,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+#[Route('/user')]
 class LoginController extends AbstractController
 {
     #[Route('/logout', name: 'app_logout')]

@@ -3,6 +3,17 @@
 {% block title %}Browse pages{% endblock %}
 
 {% block main %}
-<h1>Hello!</h1>
-
+    <h1>Delete page</h1>
+    
+    <section>
+        <p>Title: {{ page.title }}</p>
+        <p>Name: {{ page.name }}</p>
+        <p>Route: {{ page.route }}</p>
+        <p>
+            Raw HTML:
+            {% include 'components/bootstrap/modal.html.twig' with {title: 'HTML', content: page.rawHtml} %}
+        </p>
+        
+        {{ form(delete_confirm_form) }}
+    </section>
 {% endblock %}

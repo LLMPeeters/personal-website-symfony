@@ -2,17 +2,34 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Hotlink;
+use App\Entity\AbstractPage;
+use App\Entity\SimpleTextPage;
+use App\Repository\HotlinkRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use LogicException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PortfolioController extends AbstractController
 {
-    #[Route('/{route}', name: 'app_portfolio', requirements: ['route' => '^(?!api|admin)[a-zA-Z_\/]*$'])]
-    public function index(string $route): Response
+    #[Route('/{route}', name: 'app_portfolio', requirements: ['route' => '^(?!api|admin|user)[a-zA-Z_\/]*$'])]
+    public function index(string $route, HotlinkRepository $hRepo, ManagerRegistry $doctrine): Response
     {
-        return $this->render('portfolio/index.html.twig', [
-            'controller_name' => 'PortfolioController',
-        ]);
+        $hotlink = $hRepo->findOneBy(['route' => $route]);
+        
+        if($hotlink instanceof Hotlink && is_subclass_of($hotlink->getPageNamespace(), AbstractPage::class)) {
+            $repo = $doctrine->getRepository($hotlink->getPageNamespace());
+            $page = $repo->findOneBy(['hotlink' => $hotlink]);
+            
+            if($page instanceof SimpleTextPage) {
+                return $this->render('portfolio/simple_page.html.twig', [
+                    'page' => $page
+                ]);
+            }
+        }
+        
+        throw new LogicException('Something went wrong in PortfolioController!');
     }
 }
