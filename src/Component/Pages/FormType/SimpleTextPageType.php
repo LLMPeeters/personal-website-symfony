@@ -5,6 +5,7 @@ namespace App\Component\Pages\FormType;
 use App\Form\HotlinkType;
 use App\Entity\SimpleTextPage;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +16,9 @@ class SimpleTextPageType extends AbstractPageType
         parent::buildForm($builder, $options);
         
         $builder
-            ->add('rawHtml')
+            ->add('rawHtml', TextareaType::class, [
+                'required' => false,
+            ])
             ->add('hotlink', HotlinkType::class)
         ;
     }

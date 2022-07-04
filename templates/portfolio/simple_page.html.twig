@@ -3,5 +3,7 @@
 {% block title %}Placeholder{% endblock %}
 
 {% block main %}
-
+    <section class="content">
+        {{ page.rawHtml|raw }}
+    </section>
 {% endblock %}

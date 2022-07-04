@@ -3,11 +3,15 @@
 {% block title %}Browse pages{% endblock %}
 
 {% block main %}
-<h1>Hello!</h1>
+<h1>Add a page</h1>
 
 {{ form_start(add_form) }}
 
-{{ form_row(add_form) }}
+{{ form_row(add_form.rawHtml, {'attr': {'class': 'ckeditor-classic-instance', 'required': false}}) }}
+
+{{ form_row(add_form.title) }}
+{{ form_row(add_form.name) }}
+{{ form_row(add_form.hotlink) }}
 
 <input type="submit" value="Create page">
 {{ form_end(add_form) }}
