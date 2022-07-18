@@ -2,7 +2,6 @@ class CollectionForm {
     prototype = null;
     target = null;
     addButton = null;
-    deleteButton = null;
     fieldCount = 0;
 	clone = null;
 
@@ -20,12 +19,88 @@ class CollectionForm {
 		
 		this.createButtons();
 		
+		this.addButton = this.createAddButton();
+		
 		this.target.insertAdjacentElement(`afterend`, this.addButton);
-		this.addButton.insertAdjacentElement(`afterend`, this.deleteButton);
     }
 	
+	createMoveButtons(targetToMove) {
+		const upButton = document.createElement(`button`);
+		const downButton = document.createElement(`button`);
+		const target = targetToMove;
+		
+		upButton.innerText = `up`;
+		downButton.innerText = `down`;
+		
+		upButton.addEventListener(`click`, function(e) {
+			e.preventDefault();
+			
+			const children = Array.from(target.parentNode.querySelectorAll(`:scope > *`));
+			const index = children.indexOf(target);
+			
+			if(index > 0) {
+				children[index-1].insertAdjacentElement(`beforebegin`, target);
+			}
+		});
+		
+		downButton.addEventListener(`click`, function(e) {
+			e.preventDefault();
+			
+			const children = Array.from(target.parentNode.querySelectorAll(`:scope > *`));
+			const index = children.indexOf(target);
+			
+			if(index < children.length-1) {
+				children[index+1].insertAdjacentElement(`afterend`, target);
+			}
+		});
+		
+		return [upButton, downButton];
+	}
+	
 	getNewField() {
-		return this.setIndex(this.clone.cloneNode(true));
+		const field = this.clone.cloneNode(true);
+		const removeButton = this.createRemoveButton(field);
+		const moveButtons = this.createMoveButtons(field);
+		
+		for(const button of moveButtons) {
+			field.insertAdjacentElement(`beforeend`, button);
+		}
+		
+		this.setIndex(field);
+		field.insertAdjacentElement(`beforeend`, removeButton);
+		
+		return this.setIndex(field);
+	}
+	
+	createAddButton() {
+		const addButton = document.createElement(`button`);
+		const target = this.target;
+		const thisHelper = this;
+		
+		addButton.innerText = `add`;
+		addButton.addEventListener(`click`, function(e) {
+			e.preventDefault();
+			
+			const newField = thisHelper.getNewField();
+			
+			target.insertAdjacentElement(`beforeend`, newField);
+		});
+		
+		return addButton;
+	}
+	
+	createRemoveButton(targetToRemove) {
+		const removeButton = document.createElement(`button`);
+		const target = targetToRemove;
+		
+		removeButton.innerText = `remove`;
+		removeButton.addEventListener(`click`, function(e) {
+			e.preventDefault();
+			
+			target.remove();
+		});
+		
+		return removeButton;
 	}
 	
 	createButtons() {
