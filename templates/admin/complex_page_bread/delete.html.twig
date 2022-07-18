@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse pages{% endblock %}
+
+{% block main %}
+    <h1>Delete page</h1>
+    
+    <section>
+        <p>Title: {{ page.title }}</p>
+        <p>Name: {{ page.name }}</p>
+        <p>Route: {{ page.route }}</p>
+        
+        {{ form(delete_confirm_form) }}
+    </section>
+{% endblock %}
