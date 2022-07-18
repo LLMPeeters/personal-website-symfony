@@ -2,9 +2,10 @@
 
 namespace App\Component\Pages\FormType;
 
+use App\Form\HotlinkType;
+use App\Entity\AbstractPage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use App\Entity\AbstractPage;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbstractPageType extends AbstractType
@@ -14,6 +15,7 @@ class AbstractPageType extends AbstractType
         $builder
             ->add('title')
             ->add('name')
+            ->add('hotlink', HotlinkType::class)
         ;
     }
 

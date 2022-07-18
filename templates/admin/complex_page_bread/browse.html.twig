@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse pages{% endblock %}
+
+{% block main %}
+<h1>Browse all simple text pages</h1>
+
+{% if pages|length > 0 %}
+    <table>
+        <thead>
+            <tr class="bg-light">
+                <th class="border p-1">Page name</th>
+                <th class="border p-1">Page route</th>
+                <th class="border p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit page"><i class="fa-solid fa-pencil"></i></th>
+                <th class="border p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete page"><i class="fa-solid fa-trash"></i></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for page in pages %}
+                <tr>
+                    <td class="border p-1">
+                        <a href="{{ path('admin_complex_page_read', {id: page.id}) }}" target="_SELF">{{ page.name }}</a>
+                    </td>
+                    <td class="border p-1">
+                        <a href="/{{ page.route }}" target="_BLANK">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                            {{ page.route }}
+                        </a>
+                    </td>
+                    <td class="border p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit page">
+                        <a href="{{ path('admin_complex_page_edit', {id: page.id}) }}" target="_SELF">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                    </td>
+                    <td class="border p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete page">
+                        <a href="{{ path('admin_complex_page_delete', {id: page.id}) }}" target="_SELF">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>There are no pages yet.</p>
+{% endif %}
+
+{% endblock %}

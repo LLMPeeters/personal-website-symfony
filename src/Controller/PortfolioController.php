@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
+use LogicException;
 use App\Entity\Hotlink;
+use App\Entity\ComplexPage;
 use App\Entity\AbstractPage;
 use App\Entity\SimpleTextPage;
 use App\Repository\HotlinkRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use LogicException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,9 @@ class PortfolioController extends AbstractController
                 return $this->render('portfolio/simple_page.html.twig', [
                     'page' => $page
                 ]);
-            }
+            } elseif($page instanceof ComplexPage) {
+				dd('is complex page');
+			}
         }
         
         throw new LogicException('Something went wrong in PortfolioController!');

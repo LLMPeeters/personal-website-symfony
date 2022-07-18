@@ -19,7 +19,6 @@ class SimpleTextPageType extends AbstractPageType
             ->add('rawHtml', TextareaType::class, [
                 'required' => false,
             ])
-            ->add('hotlink', HotlinkType::class)
         ;
     }
 

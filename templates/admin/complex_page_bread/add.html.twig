@@ -1,0 +1,17 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse pages{% endblock %}
+
+{% block main %}
+<h1>Add a page</h1>
+
+{{ form_start(add_form) }}
+
+{{ form_row(add_form.title) }}
+{{ form_row(add_form.name) }}
+{{ form_row(add_form.hotlink) }}
+
+<input type="submit" value="Create page">
+{{ form_end(add_form) }}
+
+{% endblock %}
