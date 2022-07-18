@@ -29,7 +29,9 @@ class PortfolioController extends AbstractController
                     'page' => $page
                 ]);
             } elseif($page instanceof ComplexPage) {
-				dd('is complex page');
+				return $this->render('portfolio/complex_page.html.twig', [
+					'page' => $page,
+				]);
 			}
         }
         

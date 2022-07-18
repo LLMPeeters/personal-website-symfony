@@ -1,0 +1,11 @@
+{% extends 'portfolio/base.html.twig' %}
+
+{% block title %}Placeholder{% endblock %}
+
+{% block main %}
+    <section class="content">
+        {% for element in page.elements %}
+			<{{ element.types }}>{{ element.content }}</{{ element.types }}>
+		{% endfor %}
+    </section>
+{% endblock %}
