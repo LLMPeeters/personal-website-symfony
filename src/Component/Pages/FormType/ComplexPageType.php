@@ -20,6 +20,9 @@ class ComplexPageType extends AbstractPageType
 				'entry_type' => ComplexPageItemType::class,
 				'entry_options' => [
 					'label' => false,
+					'attr' => [
+						'draggable' => 'true',
+					],
 				],
 				'allow_add' => true,
 				'allow_delete' => true,
