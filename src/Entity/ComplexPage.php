@@ -14,7 +14,7 @@ class ComplexPage extends AbstractPage
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'object')]
+    #[ORM\Column(type: 'array')]
     private $elements;
 
     public function getId(): ?int
@@ -22,12 +22,12 @@ class ComplexPage extends AbstractPage
         return $this->id;
     }
 
-    public function getElements(): ?object
+    public function getElements(): ?array
     {
         return $this->elements;
     }
 
-    public function setElements(object $elements): self
+    public function setElements(array $elements): self
     {
         $this->elements = $elements;
 
