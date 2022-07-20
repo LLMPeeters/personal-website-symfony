@@ -15,7 +15,7 @@ class AdminController extends AbstractController
     public function index(): Response
     {
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+            'disk_space' => round(disk_free_space('/') / 1000000000, 4),
         ]);
     }
 }
