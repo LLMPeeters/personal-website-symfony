@@ -13,6 +13,7 @@ class ComplexPageType extends AbstractPageType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+		// dd($options['data']->getElements());
         parent::buildForm($builder, $options);
         
         $builder
