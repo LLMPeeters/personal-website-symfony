@@ -10,16 +10,48 @@ class CollectionForm {
         this.prototype = target.getAttribute(attribute);
 		target.removeAttribute(attribute);
         this.target = target;
-		this.target.innerHTML = this.prototype;
+		this.clone = this.initClone();
 		
-		this.initFirstField(this.target.querySelector(`:scope > *`));
+		if(target.querySelector(`*`) === null) {
+			this.target.insertAdjacentElement(`beforeend`, this.getNewField());
+		} else {
+			for(const field of this.target.querySelectorAll(`:scope > *`)) {
+				this.getNewField(field);
+			}
+		}
 		
 		this.createButtons();
-		
 		this.addButton = this.createAddButton();
-		
 		this.target.insertAdjacentElement(`afterend`, this.addButton);
     }
+	
+	initClone() {
+		this.target.insertAdjacentHTML(`afterbegin`, this.prototype);
+		
+		const field = this.target.querySelector(`:scope > *:first-child`);
+		const elements = [field];
+		
+		for(const item of elements) {
+			for(const child of item.querySelectorAll(`:scope > *`)) {
+				elements.push(child);
+			}
+			
+			const attributeNames = item.getAttributeNames();
+			
+			for(const name of attributeNames) {
+				if(item.getAttribute(name).includes(`__name__`)) {
+					item.setAttribute(
+						`old.${name}`,
+						item.getAttribute(name)
+					)
+				}
+			}
+		}
+		
+		field.remove();
+		
+		return field;
+	}
 	
 	createMoveButtons(targetToMove) {
 		const upButton = document.createElement(`button`);
@@ -66,7 +98,12 @@ class CollectionForm {
 			field.insertAdjacentElement(`beforeend`, button);
 		}
 		
-		this.setIndex(field);
+		if(inputField === null) {
+			this.setIndex(field);
+		} else {
+			this.fieldCount++;
+		}
+		
 		field.insertAdjacentElement(`beforeend`, removeButton);
 		this.fields.push(field);
 		
@@ -131,12 +168,10 @@ class CollectionForm {
 	
 	createButtons() {
 		const addButton = document.createElement(`button`);
-		const deleteButton = document.createElement(`button`);
 		const target = this.target;
 		const thisHelper = this;
 		
 		addButton.innerText = `add`;
-		deleteButton.innerText = `delete`;
 		
 		addButton.addEventListener(`click`, function(e) {
 			e.preventDefault();
@@ -146,14 +181,7 @@ class CollectionForm {
 			target.insertAdjacentElement(`beforeend`, newField);
 		});
 		
-		deleteButton.addEventListener(`click`, function(e) {
-			e.preventDefault();
-			
-			target.querySelector(`:scope > *:last-child`).remove();
-		});
-		
 		this.addButton = addButton;
-		this.deleteButton = deleteButton;
 	}
 	
 	resetIndexes() {
