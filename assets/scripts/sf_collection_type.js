@@ -1,5 +1,6 @@
 class CollectionForm {
     prototype = null;
+	prototypeAttributes = {};
     target = null;
     addButton = null;
     fieldCount = 0;
@@ -7,7 +8,10 @@ class CollectionForm {
 	fields = [];
 
     constructor(target, attribute) {
+		// The key to my salvation
+		// (?<= )([^=]+)="([^"]+)__name__([^"]*)"
         this.prototype = target.getAttribute(attribute);
+		this.getPrototypeAttributes();
 		target.removeAttribute(attribute);
         this.target = target;
 		this.clone = this.initClone();
@@ -23,7 +27,40 @@ class CollectionForm {
 		this.createButtons();
 		this.addButton = this.createAddButton();
 		this.target.insertAdjacentElement(`afterend`, this.addButton);
+		
+		console.log(this.prototypeAttributes);
     }
+	
+	getPrototypeAttributes() {
+		const matches = this.prototype.matchAll(/(?<= )([^=]+)="([^"]+)__name__([^"]*)"/gm);
+		
+		for(let match = matches.next(); !match.done; match = matches.next()) {
+			const name = match.value[1];
+			const begin = match.value[2];
+			const after = match.value[3];
+			
+			if(!Array.isArray(this.prototypeAttributes[name])) {
+				this.prototypeAttributes[name] = [];
+			}
+			
+			this.prototypeAttributes[name].push([begin, after])
+		}
+	}
+	
+	resetEditAttributes() {
+		const m = this.prototypeAttributes;
+		
+		for(const key in m) {
+			const subArray = m[key];
+			
+			for(const subSubArray of subArray) {
+				const begin = subSubArray[0];
+				const end = subSubArray[1];
+				
+				// TODO
+			}
+		}
+	}
 	
 	initClone() {
 		this.target.insertAdjacentHTML(`afterbegin`, this.prototype);
@@ -98,10 +135,16 @@ class CollectionForm {
 			field.insertAdjacentElement(`beforeend`, button);
 		}
 		
+		if(inputField !== null) {
+			this.fieldCount++;
+			
+			// Loop through each element and attribute and use this.prototypeAttributes to reset everything to __name__
+		}
+		
 		if(inputField === null) {
 			this.setIndex(field);
 		} else {
-			this.fieldCount++;
+			
 		}
 		
 		field.insertAdjacentElement(`beforeend`, removeButton);
