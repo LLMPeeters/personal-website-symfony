@@ -6,27 +6,28 @@ class CollectionForm {
     fieldCount = 0;
 	clone = null;
 	fields = [];
-
-    constructor(target, attribute) {
-		// The key to my salvation
-		// (?<= )([^=]+)="([^"]+)__name__([^"]*)"
+	buttonClassses = [];
+	
+	// This should be cleaned later
+    constructor(target, attribute, buttonClasses) {
         this.prototype = target.getAttribute(attribute);
-		this.getPrototypeAttributes();
-		target.removeAttribute(attribute);
         this.target = target;
+		this.buttonClasses = buttonClasses;
 		this.clone = this.initClone();
+		this.addButton = this.createAddButton();
 		
-		if(target.querySelector(`*`) === null) {
+		if(!target.hasChildNodes()) {
 			this.target.insertAdjacentElement(`beforeend`, this.getNewField());
 		} else {
+			this.getPrototypeAttributes();
+			
 			for(const field of this.target.querySelectorAll(`:scope > *`)) {
 				this.getNewField(field);
 			}
 		}
 		
-		this.createButtons();
-		this.addButton = this.createAddButton();
 		this.target.insertAdjacentElement(`afterend`, this.addButton);
+		this.target.removeAttribute(attribute);
     }
 	
 	getPrototypeAttributes() {
@@ -110,6 +111,11 @@ class CollectionForm {
 		upButton.innerText = `up`;
 		downButton.innerText = `down`;
 		
+		for(const className of this.buttonClasses) {
+			upButton.classList.add(className);
+			downButton.classList.add(className);
+		}
+		
 		upButton.addEventListener(`click`, function(e) {
 			e.preventDefault();
 			
@@ -188,6 +194,10 @@ class CollectionForm {
 		const target = this.target;
 		const thisHelper = this;
 		
+		for(const className of this.buttonClasses) {
+			addButton.classList.add(className);
+		}
+		
 		addButton.innerText = `add`;
 		addButton.addEventListener(`click`, function(e) {
 			e.preventDefault();
@@ -204,6 +214,10 @@ class CollectionForm {
 		const removeButton = document.createElement(`button`);
 		const target = targetToRemove;
 		
+		for(const className of this.buttonClasses) {
+			removeButton.classList.add(className);
+		}
+		
 		removeButton.innerText = `remove`;
 		removeButton.addEventListener(`click`, function(e) {
 			e.preventDefault();
@@ -212,24 +226,6 @@ class CollectionForm {
 		});
 		
 		return removeButton;
-	}
-	
-	createButtons() {
-		const addButton = document.createElement(`button`);
-		const target = this.target;
-		const thisHelper = this;
-		
-		addButton.innerText = `add`;
-		
-		addButton.addEventListener(`click`, function(e) {
-			e.preventDefault();
-			
-			const newField = thisHelper.getNewField();
-			
-			target.insertAdjacentElement(`beforeend`, newField);
-		});
-		
-		this.addButton = addButton;
 	}
 	
 	resetIndexes() {
@@ -285,7 +281,7 @@ const FormManager = {
 
         for(const form of collectionForms) {
             this.forms.push(
-                new CollectionForm(form, options.targetAttribute)
+                new CollectionForm(form, options.targetAttribute, options.buttonClasses)
             );
         }
     }
@@ -293,4 +289,5 @@ const FormManager = {
 
 FormManager.init({
     targetAttribute: `data-prototype`,
+	buttonClasses: [`btn`, `btn-outline-secondary`],
 });

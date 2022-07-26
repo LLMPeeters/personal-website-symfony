@@ -21,9 +21,18 @@ class ComplexPageItemType extends AbstractType
 		
 		$builder
 			->add('types', ChoiceType::class, [
+				'label' => false,
 				'choices' => $types,
+				'attr' => [
+					'class' => 'form-select',
+				],
 			])
-			->add('content', TextareaType::class)
+			->add('content', TextareaType::class, [
+				'label' => false,
+				'attr' => [
+					'class' => 'form-control',
+				],
+			])
 		;
 	}
 }

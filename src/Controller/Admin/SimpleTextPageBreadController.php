@@ -20,7 +20,7 @@ class SimpleTextPageBreadController extends AbstractController
     {
         $pages = $stpRepo->findAll();
         
-        return $this->render('admin/simple_text_page_bread/browse.html.twig', [
+        return $this->render('admin/pages/simple_text_page_bread/browse.html.twig', [
             'pages' => $pages
         ]);
     }
@@ -28,7 +28,7 @@ class SimpleTextPageBreadController extends AbstractController
     #[Route('/read/{id}', name: 'admin_simple_text_page_read')]
     public function read(SimpleTextPage $page): Response
     {
-        return $this->render('admin/simple_text_page_bread/read.html.twig', [
+        return $this->render('admin/pages/simple_text_page_bread/read.html.twig', [
             'page' => $page,
         ]);
     }
@@ -45,7 +45,7 @@ class SimpleTextPageBreadController extends AbstractController
             return $this->redirectToRoute('admin_simple_text_page_read', ['id' => $page->getId()]);
         }
         
-        return $this->render('admin/simple_text_page_bread/edit.html.twig', [
+        return $this->render('admin/pages/simple_text_page_bread/edit.html.twig', [
             'edit_form' => $form->createView(),
         ]);
     }
@@ -67,7 +67,7 @@ class SimpleTextPageBreadController extends AbstractController
             return $this->redirectToRoute('admin_simple_text_page_read', ['id' => $page->getId()]);
         }
         
-        return $this->render('admin/simple_text_page_bread/add.html.twig', [
+        return $this->render('admin/pages/simple_text_page_bread/add.html.twig', [
             'add_form' => $form->createView(),
         ]);
     }
@@ -88,7 +88,7 @@ class SimpleTextPageBreadController extends AbstractController
             return $this->redirectToRoute('admin_simple_text_page_browse');
         }
         
-        return $this->render('admin/simple_text_page_bread/delete.html.twig', [
+        return $this->render('admin/pages/simple_text_page_bread/delete.html.twig', [
             'delete_confirm_form' => $form->createView(),
             'page' => $page,
         ]);
