@@ -27,8 +27,6 @@ class CollectionForm {
 		this.createButtons();
 		this.addButton = this.createAddButton();
 		this.target.insertAdjacentElement(`afterend`, this.addButton);
-		
-		console.log(this.prototypeAttributes);
     }
 	
 	getPrototypeAttributes() {
@@ -47,17 +45,30 @@ class CollectionForm {
 		}
 	}
 	
-	resetEditAttributes() {
+	resetEditAttributes(target) {
 		const m = this.prototypeAttributes;
+		const elements = [target];
 		
-		for(const key in m) {
-			const subArray = m[key];
+		for(const element of elements) {
+			for(const child of element.querySelectorAll(`:scope > *`)) {
+				elements.push(child);
+			}
 			
-			for(const subSubArray of subArray) {
-				const begin = subSubArray[0];
-				const end = subSubArray[1];
+			for(const attributeName in m) {
+				const subArray = m[attributeName];
+				const oldValue = element.getAttribute(attributeName);
 				
-				// TODO
+				if(element.hasAttribute(attributeName)) {
+					for(const subSubArray of subArray) {
+						const begin = subSubArray[0];
+						const end = subSubArray[1];
+						
+						if(oldValue.startsWith(begin) && oldValue.endsWith(end)) {
+							element.setAttribute(attributeName, `${begin}__name__${end}`);
+							element.setAttribute(`old.${attributeName}`, `${begin}__name__${end}`);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -136,16 +147,10 @@ class CollectionForm {
 		}
 		
 		if(inputField !== null) {
-			this.fieldCount++;
-			
-			// Loop through each element and attribute and use this.prototypeAttributes to reset everything to __name__
+			this.resetEditAttributes(inputField);
 		}
 		
-		if(inputField === null) {
-			this.setIndex(field);
-		} else {
-			
-		}
+		this.setIndex(field);
 		
 		field.insertAdjacentElement(`beforeend`, removeButton);
 		this.fields.push(field);
