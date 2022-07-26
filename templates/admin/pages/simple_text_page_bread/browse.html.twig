@@ -1,12 +1,8 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'admin/pages/browse.html.twig' %}
 
-{% block title %}Browse pages{% endblock %}
+{% block title %}Browse simple pages{% endblock %}
 
-{% block main %}
-<h1>Browse all simple text pages</h1>
-
-{% if pages|length > 0 %}
-    <table>
+{% block table %}
         <thead>
             <tr class="bg-light">
                 <th class="border p-1">Page name</th>
@@ -41,9 +37,4 @@
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
-{% else %}
-    <p>There are no pages yet.</p>
-{% endif %}
-
 {% endblock %}

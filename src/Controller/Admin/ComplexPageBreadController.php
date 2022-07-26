@@ -23,7 +23,7 @@ class ComplexPageBreadController extends AbstractController
     {
         $pages = $cpRepo->findAll();
         
-        return $this->render('admin/complex_page_bread/browse.html.twig', [
+        return $this->render('admin/pages/complex_page_bread/browse.html.twig', [
             'pages' => $pages
         ]);
     }
@@ -31,7 +31,7 @@ class ComplexPageBreadController extends AbstractController
     #[Route('/read/{id}', name: 'admin_complex_page_read')]
     public function read(ComplexPage $page): Response
     {
-        return $this->render('admin/complex_page_bread/read.html.twig', [
+        return $this->render('admin/pages/complex_page_bread/read.html.twig', [
             'page' => $page,
         ]);
     }
@@ -48,7 +48,7 @@ class ComplexPageBreadController extends AbstractController
             return $this->redirectToRoute('admin_complex_page_read', ['id' => $page->getId()]);
         }
         
-        return $this->render('admin/complex_page_bread/edit.html.twig', [
+        return $this->render('admin/pages/complex_page_bread/edit.html.twig', [
             'edit_form' => $form->createView(),
         ]);
     }
@@ -70,7 +70,7 @@ class ComplexPageBreadController extends AbstractController
             return $this->redirectToRoute('admin_complex_page_read', ['id' => $page->getId()]);
         }
         
-        return $this->render('admin/complex_page_bread/add.html.twig', [
+        return $this->render('admin/pages/complex_page_bread/add.html.twig', [
             'add_form' => $form->createView(),
         ]);
     }
@@ -79,7 +79,12 @@ class ComplexPageBreadController extends AbstractController
     public function delete(Request $request, EntityManagerInterface $em, ComplexPage $page): Response
     {
         $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, ['label' => 'Confirm deletion?'])
+            ->add('confirm', SubmitType::class, [
+                'label' => 'Confirm deletion?',
+                'attr' => [
+                    'class' => 'btn btn-danger',
+                ],
+            ])
             ->getForm()
         ;
         $form->handleRequest($request);
@@ -91,7 +96,7 @@ class ComplexPageBreadController extends AbstractController
             return $this->redirectToRoute('admin_complex_page_browse');
         }
         
-        return $this->render('admin/complex_page_bread/delete.html.twig', [
+        return $this->render('admin/pages/complex_page_bread/delete.html.twig', [
             'delete_confirm_form' => $form->createView(),
             'page' => $page,
         ]);
