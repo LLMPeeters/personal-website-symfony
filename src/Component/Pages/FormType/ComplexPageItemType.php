@@ -5,7 +5,6 @@ namespace App\Component\Pages\FormType;
 use Symfony\Component\Form\AbstractType;
 use App\Component\Pages\ComplexPageItemsEnum;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -15,7 +14,7 @@ class ComplexPageItemType extends AbstractType
 	{
 		$types = [];
 		
-		foreach(ComplexPageItemsEnum::GET_ALL() as $type) {
+		foreach(ComplexPageItemsEnum::cases() as $type) {
 			$types[$type->name] = $type->value;
 		}
 		

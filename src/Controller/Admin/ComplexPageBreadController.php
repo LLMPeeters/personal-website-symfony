@@ -15,7 +15,7 @@ use App\Component\Pages\FormType\SimpleTextPageType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/admin/complex_page')]
+#[Route('/admin/pages/complex_page')]
 class ComplexPageBreadController extends AbstractController
 {
     #[Route('/', name: 'admin_complex_page_browse')]

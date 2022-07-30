@@ -13,17 +13,5 @@ enum ComplexPageItemsEnum: string
 	
 	case PARAGRAPH = 'P';
 	
-	public static function GET_ALL(): array
-	{
-		return [
-			self::HEADING_ONE,
-			self::HEADING_TWO,
-			self::HEADING_THREE,
-			self::HEADING_FOUR,
-			self::HEADING_FIVE,
-			self::HEADING_SIX,
-			
-			self::PARAGRAPH,
-		];
-	}
+	case WIDGET = 'WIDGET';
 }

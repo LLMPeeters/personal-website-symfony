@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse widgets{% endblock %}
+
+{% block main %}
+    <h1>Delete widget</h1>
+    
+    <section>
+        <p>Title: {{ widget.title }}</p>
+        <p>Name: {{ widget.name }}</p>
+        
+        {{ form(delete_confirm_form) }}
+    </section>
+{% endblock %}

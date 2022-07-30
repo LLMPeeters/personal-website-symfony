@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\MappedSuperclass]
-class AbstractPage
+abstract class AbstractPage
 {
     #[Assert\Valid]
     #[Assert\Type(Hotlink::class)]
