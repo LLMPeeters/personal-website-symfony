@@ -1,0 +1,23 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse widgets{% endblock %}
+
+{% block main %}
+    <h1>Details</h1>
+
+    <section>
+        <p>
+            <a class="btn btn-outline-primary" href="{{ path('admin_progress_widget_browse') }}" target="_SELF">
+                <span><i class="fa-solid fa-list"></i> Browse</span>
+            </a>
+            <a class="btn btn-outline-primary" href="{{ path('admin_progress_widget_edit', {id: widget.id}) }}" target="_SELF">
+                <span><i class="fa-solid fa-pencil"></i> Edit</span>
+            </a>
+            <a class="btn btn-outline-danger" href="{{ path('admin_progress_widget_delete', {id: widget.id}) }}" target="_SELF">
+                <span><i class="fa-solid fa-trash"></i> Delete</span>
+            </a>
+        </p>
+        <p>Title: {{ widget.title }}</p>
+        <p>Name: {{ widget.name }}</p>
+    </section>
+{% endblock %}

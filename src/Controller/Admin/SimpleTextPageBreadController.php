@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-#[Route('/admin/simple_text_page')]
+#[Route('/admin/pages/simple_text_page')]
 class SimpleTextPageBreadController extends AbstractController
 {
     #[Route('/', name: 'admin_simple_text_page_browse')]

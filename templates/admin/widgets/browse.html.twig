@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse widgets{% endblock %}
+
+{% block main %}
+<h1>Browse all progress widgets</h1>
+
+<div class="w-100 d-flex justify-content-center">
+    {% if widgets|length > 0 %}
+        <table class="p-2">
+            {% block table %}{% endblock %}
+        </table>
+    {% else %}
+        <p>There are no widgets yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
