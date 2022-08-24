@@ -40,9 +40,4 @@ class WidgetsManager
 		
 		return $widgetNames;
 	}
-	
-	public function getWidgetFromName(): array
-	{
-		
-	}
 }
