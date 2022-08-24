@@ -17,6 +17,9 @@ class ComplexPage extends AbstractPage
     #[ORM\Column(type: 'array')]
     private $elements;
 
+    #[ORM\OneToOne(mappedBy: 'page', targetEntity: Project::class, cascade: ['persist', 'remove'])]
+    private $project;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +33,23 @@ class ComplexPage extends AbstractPage
     public function setElements(array $elements): self
     {
         $this->elements = $elements;
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(Project $project): self
+    {
+        // set the owning side of the relation if necessary
+        if ($project->getPage() !== $this) {
+            $project->setPage($this);
+        }
+
+        $this->project = $project;
 
         return $this;
     }
