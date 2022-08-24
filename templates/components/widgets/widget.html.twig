@@ -1,0 +1,7 @@
+{# var AbstractWidget widget #}
+
+{% if isProgressWidget(widget) %}
+	{% include 'components/widgets/progressWidget.html.twig' with {'widget': widget} %}
+{% else %}
+	<p>Missing widget!</p>
+{% endif %}

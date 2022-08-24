@@ -13,7 +13,7 @@ class HotlinkType extends AbstractType
     {
         $builder
             ->add('route', null, [
-                'help' => 'You can only use upper- or lowercase letters and underscores.',
+                'help' => 'a-Z and _ only, cannot start with api, admin, or user',
             ])
         ;
     }

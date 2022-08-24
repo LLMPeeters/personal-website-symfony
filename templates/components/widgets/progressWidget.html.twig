@@ -1,0 +1,15 @@
+{# var ProgressWidget widget #}
+
+<section class="progress-widget widget">
+	<h1>{{ widget.title }}</h1>
+	{% for bar in widget.progressBars %}
+		<div progress="{{ bar.percentage }}">
+			<p>{{ bar.name }}</p>
+			<div title="{{ bar.percentage }}%">
+				<div class="bar">
+					<p><strong>{{ bar.percentage }}%</strong></p>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+</section>
