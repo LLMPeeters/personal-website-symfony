@@ -5,7 +5,11 @@
 {% block main %}
     <section class="content">
         {% for element in page.elements %}
-			<{{ element.types }}>{{ element.content }}</{{ element.types }}>
+			{% if isWidget(element.types) %}
+				{% include 'components/widgets/widget.html.twig' with {'widget': getWidget(element.widgetChoices)} %}
+			{% else %}
+				<{{ element.types }}>{{ element.content }}</{{ element.types }}>
+			{% endif %}
 		{% endfor %}
     </section>
 {% endblock %}

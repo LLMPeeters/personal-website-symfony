@@ -15,7 +15,7 @@ class CollectionForm {
 		this.buttonClasses = buttonClasses;
 		this.clone = this.initClone();
 		this.addButton = this.createAddButton();
-		
+		console.log(this.prototype);
 		if(!target.hasChildNodes()) {
 			this.target.insertAdjacentElement(`beforeend`, this.getNewField());
 		} else {

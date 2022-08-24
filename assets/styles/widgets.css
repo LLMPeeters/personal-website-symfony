@@ -1,0 +1,56 @@
+.widget {
+	max-width: 480px;
+	min-width: 290px;
+	float: right;
+}
+
+.progress-widget {
+	display: block;
+	background-color: #1d2f5d;
+	padding: 2px;
+}
+
+.progress-widget h1,
+.progress-widget p {
+	color: white;
+}
+
+.progress-widget h1 {
+	margin: 0 0 0 4px;
+}
+
+.progress-widget p {
+	margin: 0 0 0 8px;
+}
+
+.progress-widget>div>div {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	height: 1em;
+	width: 100%;
+	background-color: #e0f4ff;
+	border-radius: 2px;
+}
+
+.progress-widget>div>div>div {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	height: calc(100% - 4px);
+	width: calc(100% - 4px);
+	background-color: #40b9ff;
+	border-radius: 2px;
+}
+
+.progress-widget>div>div>div>p {
+	color: #1d2f5d;
+	font-size: 0.75em;
+	display: none;
+	user-select: none;
+}
+.progress-widget>div:hover>div>div>p {
+	display: block;
+}
