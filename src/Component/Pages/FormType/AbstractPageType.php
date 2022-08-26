@@ -7,6 +7,7 @@ use App\Entity\AbstractPage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class AbstractPageType extends AbstractType
 {
@@ -15,6 +16,7 @@ class AbstractPageType extends AbstractType
         $builder
             ->add('title')
             ->add('name')
+			->add('addToNav', CheckboxType::class)
             ->add('hotlink', HotlinkType::class)
         ;
     }

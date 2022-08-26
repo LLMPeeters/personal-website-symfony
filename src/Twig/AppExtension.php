@@ -14,7 +14,8 @@ class AppExtension extends AbstractExtension
 {
 	public function __construct(
 		private ManagerRegistry $doctrine,
-		private string $publicProjectsDir
+		private string $publicProjectsDir,
+		private string $publicImageDir
 	) {}
 	
 	public function getFunctions()
@@ -51,6 +52,8 @@ class AppExtension extends AbstractExtension
 	{
 		if($varName === 'PUBLIC_PROJECTS_DIR') {
 			return $this->publicProjectsDir;
+		} elseif($varName === 'PUBLIC_IMAGE_DIR') {
+			return $this->publicImageDir;
 		} else {
 			return false;
 		}
@@ -61,12 +64,12 @@ class AppExtension extends AbstractExtension
 		return ComplexPageItemsEnum::WIDGET === ComplexPageItemsEnum::TryFrom($contentType);
 	}
 	
-	public function isProgressWidget(AbstractWidget $widget): bool
+	public function isProgressWidget(mixed $widget): bool
 	{
 		return $widget instanceof ProgressWidget;
 	}
 	
-	public function isProjectWidget(AbstractWidget $widget): bool
+	public function isProjectWidget(mixed $widget): bool
 	{
 		return $widget instanceof ProjectWidget;
 	}

@@ -11,6 +11,7 @@
 	border-radius: 2px;
 	background-color: lightgray;
 	background-image: url("../images/image.svg");
+	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
 	overflow: hidden;

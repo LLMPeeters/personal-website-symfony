@@ -7,6 +7,7 @@ use App\Entity\Hotlink;
 use App\Entity\ComplexPage;
 use App\Entity\AbstractPage;
 use App\Entity\SimpleTextPage;
+use App\Component\Pages\PageTypeEnum;
 use App\Repository\HotlinkRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Component\Config\ForbiddenRoutePrefixesEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PortfolioController extends AbstractController
 {
@@ -23,25 +25,35 @@ class PortfolioController extends AbstractController
     {
 		// TODO: Add an automatic html sitemap
 		// TODO: Add an automatic xml sitemap
-		// TODO: Add a way to add certain pages to the header
-		// TODO: Make a 404 page
         $hotlink = $hRepo->findOneBy(['route' => $route]);
         
         if($hotlink instanceof Hotlink && is_subclass_of($hotlink->getPageNamespace(), AbstractPage::class)) {
             $repo = $doctrine->getRepository($hotlink->getPageNamespace());
             $page = $repo->findOneBy(['hotlink' => $hotlink]);
-            
+            $navPages = [];
+			
+			foreach(PageTypeEnum::cases() as $type) {
+				$navPages = array_merge(
+					$navPages,
+					$doctrine->getRepository($type->value)->findBy(['addToNav' => true])
+				);
+			}
+			
             if($page instanceof SimpleTextPage) {
                 return $this->render('portfolio/simple_page.html.twig', [
-                    'page' => $page
+                    'page' => $page,
+					'nav_pages' => $navPages,
                 ]);
             } elseif($page instanceof ComplexPage) {
 				return $this->render('portfolio/complex_page.html.twig', [
 					'page' => $page,
+					'nav_pages' => $navPages,
 				]);
+			} else {
+				throw new \LogicException('Something went terribly wrong with the URL.');
 			}
-        }
-        
-        throw new \LogicException('Page could not be found.');
+        } else {
+			throw new NotFoundHttpException();
+		}
     }
 }

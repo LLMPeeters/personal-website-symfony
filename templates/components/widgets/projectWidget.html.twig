@@ -1,7 +1,9 @@
 {# var ProjectWidget widget #}
 
 <section class="project-widget widget">
-	<div class="image">
+	<div class="image"{% if widget.image is not null %}
+		style="background-image: url('{{ getEnv('PUBLIC_IMAGE_DIR')~'/'~widget.image.fileName }}')"
+	{% endif %}>
 		<p><a href="{{ widget.project.page.hotlink.route }}">{{ widget.project.name }}</a></p>
 		
 		{% if widget.project.hasCode %}
