@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block main %}
+	{{ form_start(add_form) }}
+		{{ form_row(add_form.name) }}
+		{{ form_row(add_form.hasCode) }}
+		{{ form_row(add_form.page) }}
+		{{ form_row(add_form.widget) }}
+
+		<input class="btn btn-primary" type="submit" value="Create project">
+	{{ form_end(add_form) }}
+{% endblock %}

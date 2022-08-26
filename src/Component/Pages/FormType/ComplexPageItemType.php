@@ -33,6 +33,7 @@ class ComplexPageItemType extends AbstractType
 			])
 			->add('content', TextareaType::class, [
 				'label' => false,
+				'required' => false,
 				'attr' => [
 					'class' => 'form-control',
 				],

@@ -1,10 +1,59 @@
-.widget {
-	max-width: 480px;
-	min-width: 290px;
-	float: right;
+.project-widget {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+}
+
+.project-widget div.image {
+	position: relative;
+	height: 192px;
+	width: 256px;
+	border-radius: 2px;
+	background-color: lightgray;
+	background-image: url("../images/image.svg");
+	background-repeat: no-repeat;
+	background-position: center;
+	overflow: hidden;
+}
+
+.project-widget div.image p {
+	position: absolute;
+	text-align: center;
+	transform: translateY(-50%);
+	text-transform: uppercase;
+	font-weight: bold;
+	user-select: none;
+	width: 100%;
+	padding: 4px 0;
+	background-image: linear-gradient(0deg, #B6E4FFBF 20%, #B6E4FF 20%, #B6E4FF 80%, #B6E4FFBF 80%);
+}
+.project-widget div.image p:hover {
+	background-image: linear-gradient(0deg, #40b9ffBF 20%, #40b9ff 20%, #40b9ff 80%, #40b9ffBF 80%);
+}
+
+.project-widget div.image p:first-child {
+	top: 50%;
+}
+.project-widget div.image p:nth-child(2) {
+	top: 70%;
+}
+
+.project-widget div.image p>a {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.project-widget article {
+	padding: 16px;
+	flex-grow: 1;
+	overflow: hidden;
 }
 
 .progress-widget {
+	max-width: 480px;
+	min-width: 290px;
+	float: right;
 	display: block;
 	background-color: #1d2f5d;
 	padding: 2px;

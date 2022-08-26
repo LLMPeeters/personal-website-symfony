@@ -1,0 +1,17 @@
+{# var ProjectWidget widget #}
+
+<section class="project-widget widget">
+	<div class="image">
+		<p><a href="{{ widget.project.page.hotlink.route }}">{{ widget.project.name }}</a></p>
+		
+		{% if widget.project.hasCode %}
+			<p><a target="_BLANK" href="{{ getEnv('PUBLIC_PROJECTS_DIR')~'/'~widget.project.page.hotlink.route }}">Go to code</a></p>
+		{% endif %}
+	</div>
+	
+	<article>
+		<h1>{{ widget.title }}</h1>
+		
+		<p>{{ widget.summary }}</p>
+=	</article>
+</section>

@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use Twig\TwigFunction;
+use App\Entity\ProjectWidget;
 use App\Entity\AbstractWidget;
 use App\Entity\ProgressWidget;
 use Twig\Extension\AbstractExtension;
@@ -12,16 +13,19 @@ use App\Component\Pages\ComplexPageItemsEnum;
 class AppExtension extends AbstractExtension
 {
 	public function __construct(
-		private ManagerRegistry $doctrine
+		private ManagerRegistry $doctrine,
+		private string $publicProjectsDir
 	) {}
 	
 	public function getFunctions()
 	{
 		return [
 			new TwigFunction('name', [$this, 'className']),
+			new TwigFunction('getEnv', [$this, 'getEnvVar']),
 			new TwigFunction('isWidget', [$this, 'isWidget']),
 			new TwigFunction('getWidget', [$this, 'getWidget']),
 			new TwigFunction('isProgressWidget', [$this, 'isProgressWidget']),
+			new TwigFunction('isProjectWidget', [$this, 'isProjectWidget']),
 		];
 	}
 	
@@ -43,6 +47,15 @@ class AppExtension extends AbstractExtension
 		return $subject::class;
 	}
 	
+	public function getEnvVar(string $varName): false|string
+	{
+		if($varName === 'PUBLIC_PROJECTS_DIR') {
+			return $this->publicProjectsDir;
+		} else {
+			return false;
+		}
+	}
+	
 	public function isWidget(string $contentType): bool
 	{
 		return ComplexPageItemsEnum::WIDGET === ComplexPageItemsEnum::TryFrom($contentType);
@@ -51,5 +64,10 @@ class AppExtension extends AbstractExtension
 	public function isProgressWidget(AbstractWidget $widget): bool
 	{
 		return $widget instanceof ProgressWidget;
+	}
+	
+	public function isProjectWidget(AbstractWidget $widget): bool
+	{
+		return $widget instanceof ProjectWidget;
 	}
 }

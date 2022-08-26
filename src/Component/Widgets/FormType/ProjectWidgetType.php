@@ -20,12 +20,10 @@ class ProjectWidgetType extends AbstractWidgetType
         
         $builder
 			->add('image', FileType::class, [
+				'required' => false,
 				'mapped' => false,
 			])
 			->add('summary', TextareaType::class)
-			->add('project', EntityType::class, [
-				'class' => Project::class,
-			])
         ;
     }
 
