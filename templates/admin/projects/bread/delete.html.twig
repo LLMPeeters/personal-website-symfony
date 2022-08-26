@@ -6,6 +6,8 @@
     <h1>Delete project</h1>
     
     <section>
-        TODO: Special delete form to delete relevant entities. Delete the page, hotlink, widget, and project entity.
+        <p>Name: {{ project.name }}</p>
+        
+        {{ form(delete_confirm_form) }}
     </section>
 {% endblock %}

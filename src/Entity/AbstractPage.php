@@ -21,6 +21,9 @@ abstract class AbstractPage
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $addToNav;
+
     public function getHotlink(): ?Hotlink
     {
         return $this->hotlink;
@@ -65,6 +68,18 @@ abstract class AbstractPage
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function isAddToNav(): ?bool
+    {
+        return $this->addToNav;
+    }
+
+    public function setAddToNav(?bool $addToNav): self
+    {
+        $this->addToNav = $addToNav;
 
         return $this;
     }

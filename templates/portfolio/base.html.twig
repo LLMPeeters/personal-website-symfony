@@ -66,6 +66,11 @@
                 </div>
 
                 <div id="header-buttons">
+					{% if nav_pages is defined and nav_pages is iterable %}
+						{% for page in nav_pages %}
+							<a class="button" href="{{ page.hotlink.route }}">{{ page.name }}</a>
+						{% endfor %}
+					{% endif %}
                 </div>
 
                 <div id="header-text">
@@ -84,22 +89,7 @@
 
     <footer>
         {% block footer %}
-            <section class="content">
-                <h2>Heading</h2>
-
-                <ul>
-                    <li>List item</li>
-                </ul>
-            </section>
-
-            <section class="content">
-                <h2>Heading</h2>
-
-                <ul>
-                    <li>List item</li>
-                </ul>
-            </section>
-            <section class="content">
+			<section class="content">
                 <h2>Contact Informatie</h2>
 
                 <ul>
@@ -107,6 +97,22 @@
                     <li>Email: <a target="_BLANK" href="mailto:llmpeeters@gmail.com">LLMPeeters@gmail.com</a></li>
                     <li>Linkedin: <a target="_BLANK" href="https://linkedin.com/in/llmpeeters">linkedin.com/in/llmpeeters</a></li>
                     <li>© Lester Peeters 2019 - {{ 'now'|date('Y') }}</li>
+                </ul>
+            </section>
+
+            <section class="content">
+                <h2>Heading</h2>
+
+                <ul>
+                    <li>List item</li>
+                </ul>
+            </section>
+
+            <section class="content">
+                <h2>Heading</h2>
+
+                <ul>
+                    <li>List item</li>
                 </ul>
             </section>
         {% endblock %}

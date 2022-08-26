@@ -3,7 +3,10 @@
 namespace App\Component\Widgets\FormType;
 
 use App\Entity\Project;
+use App\Form\ImageType;
 use App\Entity\ProjectWidget;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Component\Widgets\FormType\AbstractWidgetType;
@@ -19,8 +22,7 @@ class ProjectWidgetType extends AbstractWidgetType
         parent::buildForm($builder, $options);
         
         $builder
-			->add('image', FileType::class, [
-				'required' => false,
+			->add('uploadedImage', ImageType::class, [
 				'mapped' => false,
 			])
 			->add('summary', TextareaType::class)

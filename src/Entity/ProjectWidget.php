@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\Image;
 use App\Entity\AbstractWidget;
-use App\Repository\ProjectWidgetRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProjectWidgetRepository;
 
 #[ORM\Entity(repositoryClass: ProjectWidgetRepository::class)]
 class ProjectWidget extends AbstractWidget
@@ -14,7 +15,7 @@ class ProjectWidget extends AbstractWidget
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 1000, nullable: true)]
+    #[ORM\OneToOne(targetEntity: Image::class, cascade: ['persist', 'remove'])]
     private $image;
 
     #[ORM\Column(type: 'string', length: 500)]
@@ -28,12 +29,12 @@ class ProjectWidget extends AbstractWidget
         return $this->id;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?Image
     {
         return $this->image;
     }
 
-    public function setImage(?string $image): self
+    public function setImage(?Image $image): self
     {
         $this->image = $image;
 
