@@ -13,13 +13,18 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Component\Pages\ComplexPageItemsEnum;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Component\Config\ForbiddenRoutePrefixesEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PortfolioController extends AbstractController
 {
-    #[Route('/{route}', name: 'app_portfolio', requirements: ['route' => '^(?!api|admin|user)[a-zA-Z_\/]*$'])]
+    #[Route('/{route}', name: 'app_portfolio', requirements: ['route' => '%app.allowed_routes_regex%'])]
     public function index(string $route, HotlinkRepository $hRepo, ManagerRegistry $doctrine): Response
     {
+		// TODO: Add an automatic html sitemap
+		// TODO: Add an automatic xml sitemap
+		// TODO: Add a way to add certain pages to the header
+		// TODO: Make a 404 page
         $hotlink = $hRepo->findOneBy(['route' => $route]);
         
         if($hotlink instanceof Hotlink && is_subclass_of($hotlink->getPageNamespace(), AbstractPage::class)) {
@@ -37,6 +42,6 @@ class PortfolioController extends AbstractController
 			}
         }
         
-        throw new LogicException('Something went wrong in PortfolioController!');
+        throw new \LogicException('Page could not be found.');
     }
 }

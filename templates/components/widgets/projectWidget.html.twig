@@ -5,7 +5,7 @@
 		<p><a href="{{ widget.project.page.hotlink.route }}">{{ widget.project.name }}</a></p>
 		
 		{% if widget.project.hasCode %}
-			<p><a target="_BLANK" href="{{ getEnv('PUBLIC_PROJECTS_DIR')~'/'~widget.project.page.hotlink.route }}">Go to code</a></p>
+			<p><a target="_BLANK" href="/{{ getEnv('PUBLIC_PROJECTS_DIR')~'/'~widget.project.page.hotlink.route }}">Go to code</a></p>
 		{% endif %}
 	</div>
 	
