@@ -1,0 +1,44 @@
+{% extends 'admin/projects/browse.html.twig' %}
+
+{% block title %}Browse projects{% endblock %}
+
+{% block table %}
+    <thead>
+        <tr class="bg-light">
+            <th class="border p-2">Project name</th>
+            <th class="border p-2">Project page</th>
+            <th class="border p-2">Project data</th>
+            <th class="border text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit project"><i class="fa-solid fa-pencil"></i></th>
+            <th class="border text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete project"><i class="fa-solid fa-trash"></i></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for project in projects %}
+            <tr>
+                <td class="border p-2">
+                    <a class="btn btn-outline-primary" href="{{ path('admin_project_read', {id: project.id}) }}" target="_SELF"><i class="fa-solid fa-file-lines"></i> {{ project.name }}</a>
+                </td>
+                <td class="border p-2">
+                    <a class="btn btn-outline-secondary" href="/{{ project.page.route }}" target="_BLANK">
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                        {{ project.page.route }}
+                    </a>
+                </td>
+                <td class="border p-2">
+					Nothing yet.
+                </td>
+                <td class="border p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit project">
+                    <a class="btn btn-outline-secondary" href="{{ path('admin_project_edit', {id: project.id}) }}" target="_SELF">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
+                </td>
+                <td class="border p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete project">
+                    <a class="btn btn-outline-danger" href="{{ path('admin_project_delete', {id: project.id}) }}" target="_SELF">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}

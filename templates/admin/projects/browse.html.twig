@@ -1,0 +1,18 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse projects{% endblock %}
+
+{% block main %}
+<h1>Browse all projects</h1>
+
+<div class="w-100 d-flex justify-content-center">
+    {% if projects|length > 0 %}
+        <table class="p-2">
+            {% block table %}{% endblock %}
+        </table>
+    {% else %}
+        <p>There are no projects yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
