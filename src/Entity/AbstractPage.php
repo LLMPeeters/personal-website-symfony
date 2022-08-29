@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\AbstractPageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AbstractPageRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\MappedSuperclass]
@@ -23,6 +24,9 @@ abstract class AbstractPage
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $addToNav;
+	
+	abstract public function getId(): ?int;
+	abstract public function getData(): Collection;
 
     public function getHotlink(): ?Hotlink
     {
