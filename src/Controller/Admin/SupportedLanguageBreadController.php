@@ -24,6 +24,17 @@ class SupportedLanguageBreadController extends AbstractController
             'languages' => $languages
         ]);
     }
+	
+	#[Route('/update_main/{id}', name: 'admin_supported_language_update_main')]
+	public function updateMain(SupportedLanguageRepository $slRepo, EntityManagerInterface $em, SupportedLanguage $language): Response
+	{
+		$language->setMain(!$language->isMain());
+		
+		$em->persist($language);
+		$em->flush();
+		
+        return $this->redirectToRoute('admin_supported_language_browse');
+	}
     
     #[Route('/add', name: 'admin_supported_language_add')]
     public function add(Request $request, EntityManagerInterface $em): Response

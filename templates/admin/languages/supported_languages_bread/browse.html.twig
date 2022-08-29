@@ -10,6 +10,7 @@
 			<table class="p-2">
 				<thead>
 					<tr class="bg-light">
+						<th class="border p-2">Main</th>
 						<th class="border p-2">Language code identifier</th>
 						<th class="border text-center"><i class="fa-solid fa-trash"></i></th>
 					</tr>
@@ -18,6 +19,26 @@
 				<tbody>
 					{% for language in languages %}
 						<tr>
+							<td
+								class="border p-2"
+								data-bs-toggle="tooltip"
+								data-bs-placement="top"
+								{% if language.main %}
+									title="Main language"
+								{% else %}
+									title="Click to set to main"
+								{% endif %}
+							>
+								{% if language.main %}
+									<a class="btn btn-outline-primary" href="{{ path('admin_supported_language_update_main', {id: language.id}) }}" target="_SELF">
+										<i class="fa-solid fa-check"></i>
+									</a>
+								{% else %}
+									<a class="btn btn-outline-secondary" href="{{ path('admin_supported_language_update_main', {id: language.id}) }}" target="_SELF">
+										<i class="fa-solid fa-x"></i>
+									</a>
+								{% endif %}
+							</td>
 							<td class="border p-2" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ language.countryCode }}">
 								{{ languageCode(language.countryCode) }}
 							</td>

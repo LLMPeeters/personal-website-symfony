@@ -16,6 +16,9 @@ class SupportedLanguage
     #[ORM\Column(type: 'string', length: 2)]
     private $countryCode;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $main;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class SupportedLanguage
     public function setCountryCode(string $countryCode): self
     {
         $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    public function isMain(): ?bool
+    {
+        return $this->main;
+    }
+
+    public function setMain(?bool $main): self
+    {
+        $this->main = $main;
 
         return $this;
     }
