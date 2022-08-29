@@ -24,6 +24,9 @@ class Hotlink
 
     #[ORM\Column(type: 'string', length: 255)]
     private $pageNamespace;
+
+    #[ORM\OneToOne(mappedBy: 'hotlink', targetEntity: AbstractPageData::class, cascade: ['persist', 'remove'])]
+    private $pageData;
     
     public function getId(): ?int
     {
@@ -37,9 +40,15 @@ class Hotlink
 
     public function setRoute(string $route): self
     {
+		$code = $this->getPageData()->getSupportedLanguage()->getCountryCode();
+		
         if(preg_match('/^\//', $route)) {
             $route = substr($route, 1);
         }
+		
+		if(!preg_match('/^'.$code.'\//')) {
+			$route = $code.'/'.$route;
+		}
         
         $this->route = $route;
 
@@ -54,6 +63,23 @@ class Hotlink
     public function setPageNamespace(string $pageNamespace): self
     {
         $this->pageNamespace = $pageNamespace;
+
+        return $this;
+    }
+
+    public function getPageData(): ?AbstractPageData
+    {
+        return $this->pageData;
+    }
+
+    public function setPageData(AbstractPageData $pageData): self
+    {
+        // set the owning side of the relation if necessary
+        if ($pageData->getHotlink() !== $this) {
+            $pageData->setHotlink($this);
+        }
+
+        $this->pageData = $pageData;
 
         return $this;
     }

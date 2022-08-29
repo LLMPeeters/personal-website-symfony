@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\SimpleTextPageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use App\Repository\SimpleTextPageRepository;
 
 #[ORM\Entity(repositoryClass: SimpleTextPageRepository::class)]
 class SimpleTextPage extends AbstractPage
@@ -13,22 +15,45 @@ class SimpleTextPage extends AbstractPage
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'text')]
-    private $rawHtml;
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: SimpleTextPageData::class, orphanRemoval: true)]
+    private $data;
+
+    public function __construct()
+    {
+        $this->data = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRawHtml(): ?string
+    /**
+     * @return Collection<int, ComplexPageData>
+     */
+    public function getData(): Collection
     {
-        return $this->rawHtml;
+        return $this->data;
     }
 
-    public function setRawHtml(string $rawHtml): self
+    public function addData(SimpleTextPageData $data): self
     {
-        $this->rawHtml = $rawHtml;
+        if (!$this->data->contains($data)) {
+            $this->data[] = $data;
+            $data->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeData(SimpleTextPageData $data): self
+    {
+        if ($this->data->removeElement($data)) {
+            // set the owning side to null (unless already changed)
+            if ($data->getPage() === $this) {
+                $data->setPage(null);
+            }
+        }
 
         return $this;
     }
