@@ -24,7 +24,6 @@ class PortfolioController extends AbstractController
     #[Route('/{route}', name: 'app_portfolio', requirements: ['route' => '%app.allowed_routes_regex%'])]
     public function index(string $route, HotlinkRepository $hRepo, ManagerRegistry $doctrine, PagesToSitemap $pagesToSitemap): Response
     {
-		// TODO: Add an automatic xml sitemap
         $hotlink = $hRepo->findOneBy(['route' => $route]);
         
         if($hotlink instanceof Hotlink && is_subclass_of($hotlink->getPageNamespace(), AbstractPage::class)) {
