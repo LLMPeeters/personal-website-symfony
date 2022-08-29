@@ -68,7 +68,7 @@
                 <div id="header-buttons">
 					{% if nav_pages is defined and nav_pages is iterable %}
 						{% for page in nav_pages %}
-							<a class="button" href="{{ page.hotlink.route }}">{{ page.name }}</a>
+							<a class="button" href="{{ page.hotlink.route }}">{{ page.title }}</a>
 						{% endfor %}
 					{% endif %}
                 </div>

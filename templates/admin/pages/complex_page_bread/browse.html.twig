@@ -5,7 +5,7 @@
 {% block table %}
     <thead>
         <tr class="bg-light">
-            <th class="border p-2">Page name</th>
+            <th class="border p-2">Page identifier</th>
             <th class="border p-2">Page route</th>
             <th class="border text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit page"><i class="fa-solid fa-pencil"></i></th>
             <th class="border text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete page"><i class="fa-solid fa-trash"></i></th>
@@ -16,7 +16,7 @@
         {% for page in pages %}
             <tr>
                 <td class="border p-2">
-                    <a class="btn btn-outline-primary" href="{{ path('admin_complex_page_read', {id: page.id}) }}" target="_SELF"><i class="fa-solid fa-file-lines"></i> {{ page.name }}</a>
+                    <a class="btn btn-outline-primary" href="{{ path('admin_complex_page_read', {id: page.id}) }}" target="_SELF"><i class="fa-solid fa-file-lines"></i> {{ page.identifier }}</a>
                 </td>
                 <td class="border p-2">
                     <a class="btn btn-outline-secondary" href="/{{ page.route }}" target="_BLANK">

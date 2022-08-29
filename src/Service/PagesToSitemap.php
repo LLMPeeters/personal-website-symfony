@@ -25,7 +25,7 @@ class PagesToSitemap
 			$repo = $this->doctrine->getRepository($type->value);
 			
 			foreach($repo->findAll() as $page) {
-				$pages[$page->getHotlink()->getRoute()] = $page->getName();
+				$pages[$page->getHotlink()->getRoute()] = $page->getTitle();
 			}
 		}
 		
