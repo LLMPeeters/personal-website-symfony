@@ -11,15 +11,14 @@ use App\Repository\AbstractPageDataRepository;
 abstract class AbstractPageData
 {
     #[ORM\Column(type: 'string', length: 255)]
-    private $identifier;
-
-    #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
     #[ORM\ManyToOne(targetEntity: SupportedLanguage::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $supportedLanguage;
 
+	#[Assert\Valid]
+    #[Assert\Type(Hotlink::class)]
     #[ORM\OneToOne(inversedBy: 'pageData', targetEntity: Hotlink::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $hotlink;
@@ -27,18 +26,6 @@ abstract class AbstractPageData
 	abstract public function getId(): ?int;
 	abstract public function getPage(): AbstractPage;
 	
-    public function getIdentifier(): ?string
-    {
-        return $this->identifier;
-    }
-
-    public function setIdentifier(string $identifier): self
-    {
-        $this->identifier = $identifier;
-
-        return $this;
-    }
-
     public function getTitle(): ?string
     {
         return $this->title;
