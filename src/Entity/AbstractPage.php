@@ -10,17 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\MappedSuperclass]
 abstract class AbstractPage
 {
-    #[Assert\Valid]
-    #[Assert\Type(Hotlink::class)]
-    #[ORM\OneToOne(targetEntity: Hotlink::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private $hotlink;
-
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $identifier;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $title;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $addToNav;
@@ -28,18 +19,6 @@ abstract class AbstractPage
 	abstract public function getId(): ?int;
 	abstract public function getData(): Collection;
 
-    public function getHotlink(): ?Hotlink
-    {
-        return $this->hotlink;
-    }
-
-    public function setHotlink(Hotlink $hotlink): self
-    {
-        $this->hotlink = $hotlink;
-
-        return $this;
-    }
-    
     public function getRoute(): string
     {
         return $this->hotlink->getRoute();
@@ -60,18 +39,6 @@ abstract class AbstractPage
     public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
 
         return $this;
     }

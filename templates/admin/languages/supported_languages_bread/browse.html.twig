@@ -1,0 +1,37 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Browse languages{% endblock %}
+
+{% block main %}
+	<h1>Browse all supported languages</h1>
+	
+	<div class="w-100 d-flex justify-content-center">
+		{% if languages|length > 0 %}
+			<table class="p-2">
+				<thead>
+					<tr class="bg-light">
+						<th class="border p-2">Language code identifier</th>
+						<th class="border text-center"><i class="fa-solid fa-trash"></i></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for language in languages %}
+						<tr>
+							<td class="border p-2" data-bs-toggle="tooltip" data-bs-placement="right" title="{{ language.countryCode }}">
+								{{ languageCode(language.countryCode) }}
+							</td>
+							<td class="border p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete language">
+								<a class="btn btn-outline-danger" href="{{ path('admin_supported_language_delete', {id: language.id}) }}" target="_SELF">
+									<i class="fa-solid fa-trash"></i>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>There are no supported languages yet.</p>
+		{% endif %}
+	</div>
+{% endblock %}

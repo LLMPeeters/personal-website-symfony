@@ -7,6 +7,7 @@ use App\Entity\ProjectWidget;
 use App\Entity\AbstractWidget;
 use App\Entity\ProgressWidget;
 use Twig\Extension\AbstractExtension;
+use App\Component\Config\LanguagesEnum;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Component\Pages\ComplexPageItemsEnum;
 
@@ -21,6 +22,7 @@ class AppExtension extends AbstractExtension
 	public function getFunctions()
 	{
 		return [
+			new TwigFunction('languageCode', [$this, 'getLanguageFromCode']),
 			new TwigFunction('name', [$this, 'className']),
 			new TwigFunction('getEnv', [$this, 'getEnvVar']),
 			new TwigFunction('isWidget', [$this, 'isWidget']),
@@ -28,6 +30,11 @@ class AppExtension extends AbstractExtension
 			new TwigFunction('isProgressWidget', [$this, 'isProgressWidget']),
 			new TwigFunction('isProjectWidget', [$this, 'isProjectWidget']),
 		];
+	}
+	
+	public function getLanguageFromCode(string $code): string
+	{
+		return LanguagesEnum::tryFromName($code)?->value ?? 'Unknown';
 	}
 	
 	public function getWidget(string $serializedData): false|AbstractWidget
