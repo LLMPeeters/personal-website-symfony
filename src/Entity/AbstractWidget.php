@@ -8,21 +8,21 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractWidget
 {
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    private $name;
+    private $identifier;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
     abstract public function getId(): ?int;
     
-    public function getName(): string
+    public function getIdentifier(): string
     {
-        return $this->name;
+        return $this->identifier;
     }
     
-    public function setName(string $name): self
+    public function setIdentifier(string $identifier): self
     {
-        $this->name = $name;
+        $this->identifier = $identifier;
 
         return $this;
     }

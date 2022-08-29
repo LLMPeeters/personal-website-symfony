@@ -16,7 +16,7 @@ abstract class AbstractPage
     private $hotlink;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private $identifier;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
@@ -48,14 +48,14 @@ abstract class AbstractPage
         return $this;
     }
 
-    public function getName(): ?string
+    public function getIdentifier(): ?string
     {
-        return $this->name;
+        return $this->identifier;
     }
 
-    public function setName(string $name): self
+    public function setIdentifier(string $identifier): self
     {
-        $this->name = $name;
+        $this->identifier = $identifier;
 
         return $this;
     }
