@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class SupportedLanguageType extends AbstractType
 {
@@ -22,6 +23,7 @@ class SupportedLanguageType extends AbstractType
 			->add('countryCode', ChoiceType::class, [
 				'choices' => $choices,
 			])
+			->add('main', CheckboxType::class)
         ;
     }
 
