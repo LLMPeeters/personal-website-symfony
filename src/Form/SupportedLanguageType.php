@@ -23,7 +23,9 @@ class SupportedLanguageType extends AbstractType
 			->add('countryCode', ChoiceType::class, [
 				'choices' => $choices,
 			])
-			->add('main', CheckboxType::class)
+			->add('main', CheckboxType::class, [
+				'required' => false,
+			])
         ;
     }
 
