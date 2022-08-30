@@ -6,6 +6,12 @@
     <h1>Delete language</h1>
     
     <section>
+		{% if is_main is defined and is_main == true %}
+			<p class="alert alert-warning" role="alert">
+				This is the main language and can't be deleted.
+			</p>
+		{% endif %}
+		
 		<ul class="list-group">
 			<li class="list-group-item">Country: {{ languageCode(language.countryCode) }}</p>
 			<li class="list-group-item">Country code: {{ language.countryCode }}</p>
