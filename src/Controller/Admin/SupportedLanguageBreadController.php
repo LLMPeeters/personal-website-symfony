@@ -4,11 +4,12 @@ namespace App\Controller\Admin;
 
 use App\Entity\SupportedLanguage;
 use App\Form\SupportedLanguageType;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Service\CheckEntityProperty;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\SupportedLanguageRepository;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -26,12 +27,14 @@ class SupportedLanguageBreadController extends AbstractController
     }
 	
 	#[Route('/update_main/{id}', name: 'admin_supported_language_update_main')]
-	public function updateMain(SupportedLanguageRepository $slRepo, EntityManagerInterface $em, SupportedLanguage $language): Response
+	public function updateMain(SupportedLanguageRepository $slRepo, EntityManagerInterface $em, SupportedLanguage $language, CheckEntityProperty $check): Response
 	{
-		$language->setMain(!$language->isMain());
-		
-		$em->persist($language);
-		$em->flush();
+		if(!$check->doesEntityHaveUniquePropertyValue('main', $language, true)) {
+			$language->setMain(!$language->isMain());
+			
+			$em->persist($language);
+			$em->flush();
+		}
 		
         return $this->redirectToRoute('admin_supported_language_browse');
 	}
@@ -56,15 +59,20 @@ class SupportedLanguageBreadController extends AbstractController
     }
     
     #[Route('/delete/{id}', name: 'admin_supported_language_delete')]
-    public function delete(Request $request, EntityManagerInterface $em, SupportedLanguage $language): Response
+    public function delete(Request $request, EntityManagerInterface $em, SupportedLanguage $language, CheckEntityProperty $check): Response
     {
         $form = ($this->createFormBuilder())
             ->add('confirm', SubmitType::class, ['label' => 'Confirm deletion?'])
             ->getForm()
         ;
         $form->handleRequest($request);
-        
-        if($form->isSubmitted() && $form->isValid()) {
+        $isMain = $check->doesEntityHaveUniquePropertyValue('main', $language, true);
+		
+        if(
+			$form->isSubmitted()
+			&& $form->isValid()
+			&& !$isMain
+		) {
             $em->remove($language);
             $em->flush();
             
@@ -74,6 +82,7 @@ class SupportedLanguageBreadController extends AbstractController
         return $this->render('admin/languages/supported_languages_bread/delete.html.twig', [
             'delete_confirm_form' => $form->createView(),
             'language' => $language,
+			'is_main' => $isMain,
         ]);
     }
 }
