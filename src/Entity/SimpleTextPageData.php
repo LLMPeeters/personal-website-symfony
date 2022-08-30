@@ -3,18 +3,19 @@
 namespace App\Entity;
 
 use App\Entity\AbstractPage;
+use App\Entity\AbstractPageData;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SimpleTextPageDataRepository;
 
 #[ORM\Entity(repositoryClass: SimpleTextPageDataRepository::class)]
-class SimpleTextPageData
+class SimpleTextPageData extends AbstractPageData
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $rawHtml;
 
     #[ORM\ManyToOne(targetEntity: SimpleTextPage::class, inversedBy: 'data')]

@@ -28,6 +28,7 @@ class AbstractPageDataType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => AbstractPageData::class,
+			'supportedLanguage' => null,
         ]);
     }
 }

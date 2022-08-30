@@ -3,14 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\SimpleTextPage;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SimpleTextPageRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Component\Pages\FormType\SimpleTextPageType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Component\Pages\FormType\Page\SimpleTextPageType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/pages/simple_text_page')]
 class SimpleTextPageBreadController extends AbstractController
