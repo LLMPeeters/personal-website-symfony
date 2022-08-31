@@ -22,18 +22,7 @@ abstract class AbstractPage
 	abstract public function getId(): ?int;
 	abstract public function getData(): Collection;
 
-    public function getRoute(): string
-    {
-        return $this->hotlink->getRoute();
-    }
-    
-    public function setRoute(string $route): self
-    {
-        $this->hotlink->setRoute($route);
-        
-        return $this;
-    }
-
+	
     public function getIdentifier(): ?string
     {
         return $this->identifier;

@@ -26,7 +26,7 @@ abstract class AbstractPageData
 	abstract public function getId(): ?int;
 	abstract public function getPage(): AbstractPage;
 	
-	public function getRoute(): ?string
+	public function getRoute(): string
 	{
 		return $this->getSupportedLanguage()->getCountryCode().'/'.$this->getHotlink()->getRoute();
 	}

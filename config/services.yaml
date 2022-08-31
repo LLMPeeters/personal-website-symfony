@@ -48,11 +48,11 @@ services:
         lazy: true
       -
         name: 'doctrine.orm.entity_listener'
-        event: 'postPersist'
+        event: 'preDelete'
         entity: 'App\Entity\SupportedLanguage'
         lazy: true
       -
         name: 'doctrine.orm.entity_listener'
-        event: 'postDelete'
+        event: 'postPersist'
         entity: 'App\Entity\SupportedLanguage'
         lazy: true

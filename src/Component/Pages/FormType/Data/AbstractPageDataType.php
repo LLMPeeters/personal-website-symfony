@@ -17,9 +17,9 @@ class AbstractPageDataType extends AbstractType
     {
         $builder
 			->add('title', TextType::class)
-			// ->add('supportedLanguage', EntityType::class, [
-			// 	'class' => SupportedLanguage::class,
-			// ])
+			->add('navName', TextType::class, [
+				'help' => 'This name will appear on short links and buttons.'
+			])
 			->add('hotlink', HotlinkType::class)
 		;
     }

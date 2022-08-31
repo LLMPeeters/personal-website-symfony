@@ -43,6 +43,7 @@ class SupportedLanguageListener
 			foreach($pages as $page) {
 				($newHotlink = new Hotlink())
 					->setRoute(strval($page->getIdentifier()))
+					->setPageDataNamespace($dataName)
 					->setPageNamespace($page::class);
 				($newData = new $dataName())
 					->setSupportedLanguage($lang)
@@ -58,9 +59,21 @@ class SupportedLanguageListener
 		$em->flush();
 	}
 	
-	public function postDelete(SupportedLanguage $lang, LifecycleEventArgs $event): void
+	public function preDelete(SupportedLanguage $lang, LifecycleEventArgs $event): void
 	{
+		// Loop through each type of page data
+		foreach(PageTypeEnum::cases() as $pageType) {
+			$dataName = $pageType->getDataType();
+			$repo = $em->getRepository($dataName);
+			$pageData = $repo->findAll();
+			
+			// Loop through each data to delete it
+			foreach($pageData as $data) {
+				$em->remove($data);
+			}
+		}
 		
+		$em->flush();
 	}
 	
 	private function resetMainProperty(SupportedLanguage $lang, EntityManagerInterface $em): bool

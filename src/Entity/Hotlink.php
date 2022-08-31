@@ -26,6 +26,9 @@ class Hotlink
     #[ORM\Column(type: 'string', length: 255)]
     private $pageNamespace;
 
+    #[ORM\Column(type: 'string', length: 500)]
+    private $pageDataNamespace;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,6 +58,18 @@ class Hotlink
     public function setPageNamespace(string $pageNamespace): self
     {
         $this->pageNamespace = $pageNamespace;
+
+        return $this;
+    }
+
+    public function getPageDataNamespace(): ?string
+    {
+        return $this->pageDataNamespace;
+    }
+
+    public function setPageDataNamespace(string $pageDataNamespace): self
+    {
+        $this->pageDataNamespace = $pageDataNamespace;
 
         return $this;
     }
