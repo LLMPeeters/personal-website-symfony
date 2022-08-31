@@ -19,8 +19,7 @@ class SimpleTextPageBreadController extends AbstractController
     public function browse(SimpleTextPageRepository $stpRepo): Response
     {
         $pages = $stpRepo->findAll();
-        dd($pages[0]->getData()[0]->getHotlink()->getRoute());
-        // dd($pages[0]->getData()[0]->getHotlink());
+		
         return $this->render('admin/pages/simple_text_page_bread/browse.html.twig', [
             'pages' => $pages
         ]);

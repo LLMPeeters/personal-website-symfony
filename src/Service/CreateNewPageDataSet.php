@@ -36,8 +36,7 @@ class CreateNewPageDataSet
 					->setPage($page);
 					
 				$newHotlink
-					->setPageData($newData)
-					->setRoute($lang->getCountryCode().'/'.$page->getIdentifier());
+					->setRoute(strval($page->getIdentifier()));
 				
 				$page->addData($newData);
 				
