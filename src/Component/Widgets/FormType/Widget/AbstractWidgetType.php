@@ -1,32 +1,28 @@
 <?php
 
-namespace App\Form;
+namespace App\Component\Widgets\FormType\Widget;
 
-use App\Entity\Project;
+use App\Entity\AbstractWidget;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use App\Component\Pages\FormType\Page\ComplexPageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use App\Component\Widgets\FormType\Widget\ProjectWidgetType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class ProjectType extends AbstractType
+class AbstractWidgetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-			->add('name', TextType::class)
-			->add('hasCode', CheckboxType::class)
-			->add('page', ComplexPageType::class)
-			->add('widget', ProjectWidgetType::class)
+            ->add('identifier', TextType::class, [
+				'help' => 'This is an internal name and users will not see this.',
+			])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Project::class,
+            'data_class' => AbstractWidget::class,
         ]);
     }
 }
