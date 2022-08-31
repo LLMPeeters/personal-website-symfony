@@ -22,9 +22,6 @@ class ComplexPageData extends AbstractPageData
     #[ORM\JoinColumn(nullable: false)]
     private $page;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $navName;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -50,18 +47,6 @@ class ComplexPageData extends AbstractPageData
     public function setPage(?AbstractPage $page): self
     {
         $this->page = $page;
-
-        return $this;
-    }
-
-    public function getNavName(): ?string
-    {
-        return $this->navName;
-    }
-
-    public function setNavName(string $navName): self
-    {
-        $this->navName = $navName;
 
         return $this;
     }

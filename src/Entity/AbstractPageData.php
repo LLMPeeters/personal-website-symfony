@@ -23,6 +23,9 @@ abstract class AbstractPageData
     #[ORM\JoinColumn(nullable: false)]
     private $hotlink;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $navName;
+
 	abstract public function getId(): ?int;
 	abstract public function getPage(): AbstractPage;
 	
@@ -63,6 +66,18 @@ abstract class AbstractPageData
     public function setHotlink(Hotlink $hotlink): self
     {
         $this->hotlink = $hotlink;
+
+        return $this;
+    }
+
+    public function getNavName(): ?string
+    {
+        return $this->navName;
+    }
+
+    public function setNavName(string $navName): self
+    {
+        $this->navName = $navName;
 
         return $this;
     }

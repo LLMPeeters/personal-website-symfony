@@ -1,40 +1,15 @@
-{% extends 'admin/pages/browse.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Browse complex pages{% endblock %}
 
-{% block table %}
-    <thead>
-        <tr class="bg-light">
-            <th class="border p-2">Page identifier</th>
-            <th class="border p-2">Page route</th>
-            <th class="border text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit page"><i class="fa-solid fa-pencil"></i></th>
-            <th class="border text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete page"><i class="fa-solid fa-trash"></i></th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for page in pages %}
-            <tr>
-                <td class="border p-2">
-                    <a class="btn btn-outline-primary" href="{{ path('admin_complex_page_read', {id: page.id}) }}" target="_SELF"><i class="fa-solid fa-file-lines"></i> {{ page.identifier }}</a>
-                </td>
-                <td class="border p-2">
-                    <a class="btn btn-outline-secondary" href="/{{ page.route }}" target="_BLANK">
-                        <i class="fa-solid fa-up-right-from-square"></i>
-                        {{ page.route }}
-                    </a>
-                </td>
-                <td class="border p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit page">
-                    <a class="btn btn-outline-secondary" href="{{ path('admin_complex_page_edit', {id: page.id}) }}" target="_SELF">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-                </td>
-                <td class="border p-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete page">
-                    <a class="btn btn-outline-danger" href="{{ path('admin_complex_page_delete', {id: page.id}) }}" target="_SELF">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody>
+{% block main %}
+	<h1>Browse all complex pages</h1>
+	
+	<section class="list-browse">
+		{% for page in pages %}
+			{% include 'admin/pages/complex_page_bread/readComponent.html.twig' with {'page': page} %}
+		{% else %}
+			<p>None!</p>
+		{% endfor %}
+	</section>
 {% endblock %}

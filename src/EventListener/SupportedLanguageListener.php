@@ -4,13 +4,21 @@ namespace App\EventListener;
 
 use App\Entity\Hotlink;
 use App\Entity\SupportedLanguage;
+use App\Component\Pages\PageManager;
 use App\Component\Pages\PageTypeEnum;
+use App\Component\Widgets\WidgetManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Component\Pages\PageDataTypeEnum;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
+// TODO: Removing all of a language's related data should be done in a service that should be put into the proper Enum or Manager as well
 class SupportedLanguageListener
 {
+	public function __construct(
+		private PageManager $pManager,
+		private WidgetManager $wManager
+	) {}
+	
 	// PROBLEM: When this is preUpdate, there will be a fatal error about allowed memory size exhausted
     public function postUpdate(SupportedLanguage $lang, LifecycleEventArgs $event): void
     {
@@ -28,52 +36,16 @@ class SupportedLanguageListener
 		}
     }
 	
-	// When a new language is added, give all existing pages a corresponding data entity
 	public function postPersist(SupportedLanguage $lang, LifecycleEventArgs $event): void
 	{
-		$em = $event->getObjectManager();
-		
-		// Loop through each type of page
-		foreach(PageTypeEnum::cases() as $pageType) {
-			$dataName = $pageType->getDataType();
-			$repo = $em->getRepository($pageType->value);
-			$pages = $repo->findAll();
-			
-			// Loop through each page to add the data entity
-			foreach($pages as $page) {
-				($newHotlink = new Hotlink())
-					->setRoute(strval($page->getIdentifier()))
-					->setPageDataNamespace($dataName)
-					->setPageNamespace($page::class);
-				($newData = new $dataName())
-					->setSupportedLanguage($lang)
-					->setTitle($page->getIdentifier())
-					->setHotlink($newHotlink)
-					->setPage($page);
-				
-				$em->persist($newHotlink);
-				$em->persist($newData);
-			}
-		}
-		
-		$em->flush();
+		$this->pManager->fillDataForNewLang($lang);
+		$this->wManager->fillDataForNewLang($lang);
 	}
 	
-	public function preDelete(SupportedLanguage $lang, LifecycleEventArgs $event): void
+	public function preRemove(SupportedLanguage $lang, LifecycleEventArgs $event): void
 	{
-		// Loop through each type of page data
-		foreach(PageTypeEnum::cases() as $pageType) {
-			$dataName = $pageType->getDataType();
-			$repo = $em->getRepository($dataName);
-			$pageData = $repo->findAll();
-			
-			// Loop through each data to delete it
-			foreach($pageData as $data) {
-				$em->remove($data);
-			}
-		}
-		
-		$em->flush();
+		$this->pManager->deleteDataRelatedToLang($lang);
+		$this->wManager->deleteDataRelatedToLang($lang);
 	}
 	
 	private function resetMainProperty(SupportedLanguage $lang, EntityManagerInterface $em): bool
