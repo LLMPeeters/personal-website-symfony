@@ -5,21 +5,5 @@
 {% block main %}
     <h1>Details</h1>
 
-    <section>
-        <p>
-            <a href="{{ path('admin_simple_text_page_edit', {id: page.id}) }}" target="_SELF">
-                <span><i class="fa-solid fa-pencil"></i> Edit</span>
-            </a>
-            <a href="{{ path('admin_simple_text_page_delete', {id: page.id}) }}" target="_SELF">
-                <span><i class="fa-solid fa-trash"></i> Delete</span>
-            </a>
-        </p>
-        <p>Title: {{ page.title }}</p>
-        <p>Identifier: {{ page.identifier }}</p>
-        <p>Route: {{ page.route }}</p>
-        <p>
-            Raw HTML:
-            {% include 'components/bootstrap/modal.html.twig' with {title: 'HTML', content: page.rawHtml} %}
-        </p>
-    </section>
+	{% include 'admin/pages/simple_text_page_bread/readComponent.html.twig' with {'page': page} %}
 {% endblock %}

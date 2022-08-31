@@ -1,0 +1,98 @@
+{# var SimpleTextPage page #}
+
+<article class="border border-2">
+	<h2>{{ page.identifier }}</h2>
+	
+	<p class="user-select-none">
+		<a href="{{ path('admin_simple_text_page_edit', {id: page.id}) }}" target="_SELF">
+			<span><i class="fa-solid fa-pencil"></i> Edit</span>
+		</a>
+		<span>—</span>
+		<a href="{{ path('admin_simple_text_page_read', {id: page.id}) }}" target="_SELF">
+			<span><i class="fa-solid fa-magnifying-glass"></i> Details</span>
+		</a>
+		<span>—</span>
+		<a href="{{ path('admin_simple_text_page_delete', {id: page.id}) }}" target="_SELF">
+			<span><i class="fa-solid fa-trash"></i> Delete</span>
+		</a>
+	</p>
+	
+	<section>
+		{% for data in page.data %}
+			<div class="accordion" id="accordion-data-{{ data.id }}">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="accordion-data-heading-{{ data.id }}">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ data.id }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ data.id }}">
+							{{ data.supportedLanguage.countryCode ~ ', ' ~ data.title }}
+						</button>
+					</h2>
+					
+					<div id="accordion-data-collapse-{{ data.id }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ data.id }}" data-bs-parent="#accordion-data-{{ data.id }}">
+						<div class="accordion-body">
+							<article>
+								<h3>{{ data.title }}</h3>
+								<p>{{ languageCode(data.supportedLanguage.countryCode) }}</p>
+								
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">Name</th>
+											<th scope="col">Data</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr>
+											<td>Title</td>
+											<td>{{ data.title }}</td>
+										</tr>
+										<tr>
+											<td>Nav name</td>
+											<td>{{ data.navName }}</td>
+										</tr>
+										<tr>
+											<td>Route</td>
+											<td><a href="/{{ data.route }}" target="_BLANK">
+												{{ data.route }}
+												<i class="fa-solid fa-up-right-from-square"></i>
+											</a></td>
+										</tr>
+										<tr>
+											<td>Raw HTML</td>
+											<td>
+												<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#raw-html-{{ data.id }}">
+													View
+												</button>
+												
+												<div class="modal fade" id="raw-html-{{ data.id }}" tabindex="-1" aria-labelledby="raw-html-label-{{ data.id }}" aria-hidden="true">
+													<div class="modal-dialog modal-xl">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title" id="raw-html-label-{{ data.id }}">HTML</h5>
+																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body">
+																{{ data.rawHtml }}
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</article>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<p class="alert alert-danger" role="alert">
+				No page data found!
+			</p>
+		{% endfor %}
+	</section>
+</article>

@@ -28,6 +28,7 @@ class CreateNewPageDataSet
 				$dataName = $pageType->getDataType();
 				
 				($newHotlink = new Hotlink())
+					->setPageDataNamespace($pageType->getDataType())
 					->setPageNamespace($page::class);
 				
 				($newData = new $dataName())

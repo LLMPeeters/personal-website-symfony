@@ -85,7 +85,13 @@ class SimpleTextPageBreadController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
+			foreach($page->getData() as $data) {
+				$em->remove($data->getHotlink());
+				$em->remove($data);
+			}
+			
             $em->remove($page);
+			
             $em->flush();
             
             return $this->redirectToRoute('admin_simple_text_page_browse');

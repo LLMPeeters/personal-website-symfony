@@ -19,21 +19,17 @@ class SimpleTextPageType extends AbstractPageType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 		parent::buildForm($builder, $options);
-		// TODO: Maybe add a service that will create empty data entities to couple to this $options['data']?
-		// TODO: Call method that checks if the page is new or not?
 		
-		$this->createSet->create($options['data']);
-		
+		if(is_null($options['data']->getId())) {
+			$this->createSet->create($options['data']);
+		}
 		
 		// dd($options['data']);
-		// TODO: Add a SimpleTextPageDataType for each SupportedLanguage entity that exists, and give the SupportedLanguage entity along as an option
 		$builder
 			->add('data', CollectionType::class, [
 				'entry_type' => SimpleTextPageDataType::class,
 			])
 		;
-		
-		// dd($builder);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
