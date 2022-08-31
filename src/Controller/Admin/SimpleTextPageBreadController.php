@@ -19,7 +19,8 @@ class SimpleTextPageBreadController extends AbstractController
     public function browse(SimpleTextPageRepository $stpRepo): Response
     {
         $pages = $stpRepo->findAll();
-        
+        dd($pages[0]->getData()[0]->getHotlink()->getRoute());
+        // dd($pages[0]->getData()[0]->getHotlink());
         return $this->render('admin/pages/simple_text_page_bread/browse.html.twig', [
             'pages' => $pages
         ]);
@@ -58,10 +59,13 @@ class SimpleTextPageBreadController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
-            $page->getHotlink()->setpageNamespace(SimpleTextPage::class);
-            
-            $em->persist($page);
-            $em->persist($page->getHotlink());
+			$em->persist($page);
+			
+			foreach($page->getData() as $data) {
+				$em->persist($data);
+				$em->persist($data->getHotlink());
+			}
+			
             $em->flush();
             
             return $this->redirectToRoute('admin_simple_text_page_read', ['id' => $page->getId()]);

@@ -3,18 +3,19 @@
 {% block title %}Browse pages{% endblock %}
 
 {% block main %}
-<h1>Add a page</h1>
+	<h1>Add a page</h1>
 
-{{ form_start(add_form) }}
+	{{ form_start(add_form) }}
+		{% for data in add_form.data %}
+			{{ form_row(data.rawHtml, {'attr': {'class': 'ckeditor-classic-instance', 'required': false}}) }}
+			{{ form_row(data.title) }}
+			{{ form_row(data.hotlink) }}
+		{% endfor %}
 
-{{ form_row(add_form.rawHtml, {'attr': {'class': 'ckeditor-classic-instance', 'required': false}}) }}
+		{{ form_row(add_form.identifier) }}
+		{{ form_row(add_form.addToNav) }}
+		{{ form_row(add_form.public) }}
 
-{{ form_row(add_form.title) }}
-{{ form_row(add_form.identifier) }}
-{{ form_row(add_form.addToNav) }}
-{{ form_row(add_form.hotlink) }}
-
-<input type="submit" value="Create page">
-{{ form_end(add_form) }}
-
+		<input type="submit" value="Create page">
+	{{ form_end(add_form) }}
 {% endblock %}

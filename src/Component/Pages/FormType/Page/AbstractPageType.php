@@ -25,6 +25,7 @@ class AbstractPageType extends AbstractType
         $builder
 			->add('identifier', TextType::class)
 			->add('addToNav', CheckboxType::class)
+			->add('public', CheckboxType::class)
 		;
     }
 

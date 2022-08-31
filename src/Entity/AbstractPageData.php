@@ -10,7 +10,7 @@ use App\Repository\AbstractPageDataRepository;
 #[ORM\MappedSuperclass]
 abstract class AbstractPageData
 {
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $title;
 
     #[ORM\ManyToOne(targetEntity: SupportedLanguage::class)]
