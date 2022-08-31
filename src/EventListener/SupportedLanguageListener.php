@@ -42,7 +42,7 @@ class SupportedLanguageListener
 			// Loop through each page to add the data entity
 			foreach($pages as $page) {
 				($newHotlink = new Hotlink())
-					->setRoute($lang->getCountryCode().'/'.$page->getIdentifier())
+					->setRoute(strval($page->getIdentifier()))
 					->setPageNamespace($page::class);
 				($newData = new $dataName())
 					->setSupportedLanguage($lang)

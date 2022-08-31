@@ -19,12 +19,17 @@ abstract class AbstractPageData
 
 	#[Assert\Valid]
     #[Assert\Type(Hotlink::class)]
-    #[ORM\OneToOne(inversedBy: 'pageData', targetEntity: Hotlink::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Hotlink::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $hotlink;
 
 	abstract public function getId(): ?int;
 	abstract public function getPage(): AbstractPage;
+	
+	public function getRoute(): ?string
+	{
+		return $this->getSupportedLanguage()->getCountryCode().'/'.$this->getHotlink()->getRoute();
+	}
 	
     public function getTitle(): ?string
     {
