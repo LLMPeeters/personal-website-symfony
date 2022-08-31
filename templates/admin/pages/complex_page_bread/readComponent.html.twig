@@ -1,18 +1,18 @@
-{# var SimpleTextPage page #}
+{# var ComplexPage page #}
 
 <article class="border border-2">
 	<h2>{{ page.identifier }}</h2>
 	
 	<p class="user-select-none">
-		<a href="{{ path('admin_simple_text_page_edit', {id: page.id}) }}" target="_SELF">
+		<a href="{{ path('admin_complex_page_edit', {id: page.id}) }}" target="_SELF">
 			<span><i class="fa-solid fa-pencil"></i> Edit</span>
 		</a>
 		<span>—</span>
-		<a href="{{ path('admin_simple_text_page_read', {id: page.id}) }}" target="_SELF">
+		<a href="{{ path('admin_complex_page_read', {id: page.id}) }}" target="_SELF">
 			<span><i class="fa-solid fa-magnifying-glass"></i> Details</span>
 		</a>
 		<span>—</span>
-		<a href="{{ path('admin_simple_text_page_delete', {id: page.id}) }}" target="_SELF">
+		<a href="{{ path('admin_complex_page_delete', {id: page.id}) }}" target="_SELF">
 			<span><i class="fa-solid fa-trash"></i> Delete</span>
 		</a>
 	</p>
@@ -63,21 +63,44 @@
 											</a></td>
 										</tr>
 										<tr>
+										<tr>
 											<td>Raw HTML</td>
 											<td>
 												<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#raw-html-{{ data.id }}">
 													View
 												</button>
 												
-												<div class="modal fade" id="raw-html-{{ data.id }}" tabindex="-1" aria-labelledby="raw-html-label-{{ data.id }}" aria-hidden="true">
+												<div class="modal fade" id="raw-html-{{ data.id }}" tabindex="-1" aria-hidden="true">
 													<div class="modal-dialog modal-xl">
 														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title" id="raw-html-label-{{ data.id }}">HTML</h5>
-																<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-															</div>
 															<div class="modal-body">
-																{{ data.rawHtml }}
+																{% for element in data.elements %}
+																	<table class="table">
+																		<thead>
+																			<tr>
+																				<th scope="col">Element {{ loop.index }} name</th>
+																				<th scope="col">Element {{ loop.index }} data</th>
+																			</tr>
+																		</thead>
+																		
+																		</tbody>
+																			<tr>
+																				<td>Type</td>
+																				<td>{{ element.types }}</td>
+																			</tr>
+																			<tr>
+																				<td>Contents</td>
+																				<td>{{ element.content }}</td>
+																			</tr>
+																			<tr>
+																				<td>Widget (if applicable)</td>
+																				<td>{{ element.widgetChoices }}</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																{% else %}
+																	<p>None!</p>
+																{% endfor %}
 															</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>

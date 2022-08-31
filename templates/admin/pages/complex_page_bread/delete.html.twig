@@ -3,13 +3,9 @@
 {% block title %}Browse pages{% endblock %}
 
 {% block main %}
-    <h1>Delete page</h1>
-    
-    <section>
-        <p>Title: {{ page.title }}</p>
-        <p>Identifier: {{ page.identifier }}</p>
-        <p>Route: {{ page.route }}</p>
-        
-        {{ form(delete_confirm_form) }}
-    </section>
+	<h1>Delete page</h1>
+	
+	{% include 'admin/pages/complex_page_bread/readComponent.html.twig' with {'page': page} %}
+	
+	{{ form(delete_confirm_form) }}
 {% endblock %}
