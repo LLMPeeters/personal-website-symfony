@@ -58,12 +58,12 @@ class SimpleTextPageBreadController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
-			$em->persist($page);
-			
 			foreach($page->getData() as $data) {
 				$em->persist($data);
 				$em->persist($data->getHotlink());
 			}
+			
+			$em->persist($page);
 			
             $em->flush();
             
@@ -79,7 +79,12 @@ class SimpleTextPageBreadController extends AbstractController
     public function delete(Request $request, EntityManagerInterface $em, SimpleTextPage $page): Response
     {
         $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, ['label' => 'Confirm deletion?'])
+            ->add('confirm', SubmitType::class, [
+                'label' => 'Confirm deletion?',
+                'attr' => [
+                    'class' => 'btn btn-danger',
+                ],
+            ])
             ->getForm()
         ;
         $form->handleRequest($request);

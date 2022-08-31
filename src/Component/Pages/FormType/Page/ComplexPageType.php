@@ -2,12 +2,23 @@
 
 namespace App\Component\Pages\FormType\Page;
 
-class ComplexPageType extends AbstractType
+use App\Entity\ComplexPage;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Component\Pages\FormType\Page\AbstractPageType;
+use App\Component\Pages\FormType\Data\ComplexPageDataType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
+class ComplexPageType extends AbstractPageType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-			
+		parent::buildForm($builder, $options);
+		
+		$builder
+			->add('data', CollectionType::class, [
+				'entry_type' => ComplexPageDataType::class,
+			])
 		;
     }
 

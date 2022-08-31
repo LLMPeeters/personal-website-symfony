@@ -3,16 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ComplexPage;
-use App\Entity\SimpleTextPage;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ComplexPageRepository;
-use App\Repository\SimpleTextPageRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Component\Pages\FormType\ComplexPageType;
-use App\Component\Pages\FormType\SimpleTextPageType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Component\Pages\FormType\Page\ComplexPageType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/pages/complex_page')]
@@ -61,13 +57,16 @@ class ComplexPageBreadController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
-            $page->getHotlink()->setpageNamespace(ComplexPage::class);
-            
-            $em->persist($page);
-            $em->persist($page->getHotlink());
-            $em->flush();
-            
-            return $this->redirectToRoute('admin_complex_page_read', ['id' => $page->getId()]);
+			foreach($page->getData() as $data) {
+				$em->persist($data->getHotlink());
+				$em->persist($data);
+			}
+			
+			$em->persist($page);
+			
+			$em->flush();
+			
+			return $this->redirectToRoute('admin_complex_page_read', ['id' => $page->getId()]);
         }
         
         return $this->render('admin/pages/complex_page_bread/add.html.twig', [
@@ -90,7 +89,13 @@ class ComplexPageBreadController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
+			foreach($page->getData() as $data) {
+				$em->remove($data->getHotlink());
+				$em->remove($data);
+			}
+			
             $em->remove($page);
+			
             $em->flush();
             
             return $this->redirectToRoute('admin_complex_page_browse');
