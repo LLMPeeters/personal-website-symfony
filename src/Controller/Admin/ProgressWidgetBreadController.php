@@ -2,15 +2,15 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\ProgressWidget;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ProgressWidgetRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Component\Widgets\FormType\ProgressWidgetType;
-use App\Entity\ProgressWidget;
-use App\Repository\ProgressWidgetRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Component\Widgets\FormType\Widget\ProgressWidgetType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/widgets/progress_widget')]
 class ProgressWidgetBreadController extends AbstractController

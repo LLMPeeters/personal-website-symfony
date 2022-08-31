@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Component\Widgets\FormType;
+namespace App\Component\Widgets\FormType\Data;
 
-use App\Entity\ProgressWidget;
+use App\Entity\ProgressWidgetData;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Component\Widgets\FormType\ProgressItemType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use App\Component\Widgets\FormType\Data\AbstractWidgetDataType;
 
-class ProgressWidgetType extends AbstractWidgetType
+class ProgressWidgetDataType extends AbstractWidgetDataType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -30,7 +31,7 @@ class ProgressWidgetType extends AbstractWidgetType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ProgressWidget::class,
+            'data_class' => ProgressWidgetData::class,
         ]);
     }
 

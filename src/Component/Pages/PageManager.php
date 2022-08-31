@@ -6,8 +6,9 @@ use App\Entity\Hotlink;
 use App\Entity\SupportedLanguage;
 use App\Component\Pages\PageTypeEnum;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Component\SupportedLanguages\SupportedLanguageHelperInterface;
 
-class PageManager
+class PageManager implements SupportedLanguageHelperInterface
 {
 	public function __construct(
 		private EntityManagerInterface $em

@@ -2,8 +2,8 @@
 
 namespace App\Component\Pages\FormType;
 
+use App\Component\Widgets\WidgetManager;
 use Symfony\Component\Form\AbstractType;
-use App\Component\Widgets\WidgetsManager;
 use App\Component\Pages\ComplexPageItemsEnum;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class ComplexPageDataItemType extends AbstractType
 {
 	public function __construct(
-		private WidgetsManager $wManager
+		private WidgetManager $wManager
 	) {}
 	
 	public function buildForm(FormBuilderInterface $builder, array $options): void
