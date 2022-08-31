@@ -19,6 +19,11 @@ class SupportedLanguage
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $main;
 
+	public function __toString(): string
+	{
+		return $this->getCountryCode();
+	}
+	
     public function getId(): ?int
     {
         return $this->id;

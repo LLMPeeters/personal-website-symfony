@@ -15,6 +15,9 @@ abstract class AbstractPage
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $addToNav;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $public;
 	
 	abstract public function getId(): ?int;
 	abstract public function getData(): Collection;
@@ -51,6 +54,18 @@ abstract class AbstractPage
     public function setAddToNav(?bool $addToNav): self
     {
         $this->addToNav = $addToNav;
+
+        return $this;
+    }
+
+    public function isPublic(): ?bool
+    {
+        return $this->public;
+    }
+
+    public function setPublic(?bool $public): self
+    {
+        $this->public = $public;
 
         return $this;
     }

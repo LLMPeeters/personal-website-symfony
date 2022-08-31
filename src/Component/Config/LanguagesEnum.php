@@ -202,7 +202,7 @@ enum LanguagesEnum: string
 	{
 		try {
 			return self::fromName($name);
-		} catch (\ValueError $e) {
+		} catch (\Exception $e) {
 			return null;
 		}
 	}
