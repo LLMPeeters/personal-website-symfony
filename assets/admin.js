@@ -1,4 +1,4 @@
-const todo = [
+const languages = [
 	{code: 'ab', language: 'Abkhazian'},
 	{code: 'aa', language: 'Afar'},
 	{code: 'af', language: 'Afrikaans'},
@@ -186,7 +186,7 @@ const todo = [
 ];
 // let result = `<pre>`;
 
-// for(const lang of todo) {
+// for(const lang of languages) {
 // 	result += `case '${lang.language}' = '${lang.code}';<br />`;
 // }
 
