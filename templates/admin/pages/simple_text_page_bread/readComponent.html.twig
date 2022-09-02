@@ -1,18 +1,17 @@
+{# var int headingStartsAtNum #}
 {# var SimpleTextPage page #}
 
-<article class="border border-2">
-	<h2>{{ page.identifier }}</h2>
+<article class="detail border border-2">
+	<h{{ headingStartsAtNum }}>{{ page.identifier }}</h{{ headingStartsAtNum }}>
 	
 	<p class="user-select-none">
-		<a href="{{ path('admin_simple_text_page_edit', {id: page.id}) }}" target="_SELF">
+		<a class="btn btn-outline-primary" href="{{ path('admin_simple_text_page_edit', {id: page.id}) }}" target="_SELF">
 			<span><i class="fa-solid fa-pencil"></i> Edit</span>
 		</a>
-		<span>—</span>
-		<a href="{{ path('admin_simple_text_page_read', {id: page.id}) }}" target="_SELF">
+		<a class="btn btn-outline-primary" href="{{ path('admin_simple_text_page_read', {id: page.id}) }}" target="_SELF">
 			<span><i class="fa-solid fa-magnifying-glass"></i> Details</span>
 		</a>
-		<span>—</span>
-		<a href="{{ path('admin_simple_text_page_delete', {id: page.id}) }}" target="_SELF">
+		<a class="btn btn-outline-danger" href="{{ path('admin_simple_text_page_delete', {id: page.id}) }}" target="_SELF">
 			<span><i class="fa-solid fa-trash"></i> Delete</span>
 		</a>
 	</p>
@@ -26,16 +25,16 @@
 		{% for data in page.data %}
 			<div class="accordion" id="accordion-data-{{ data.id }}">
 				<div class="accordion-item">
-					<h2 class="accordion-header" id="accordion-data-heading-{{ data.id }}">
+					<h{{ headingStartsAtNum }} class="accordion-header" id="accordion-data-heading-{{ data.id }}">
 						<button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ data.id }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ data.id }}">
 							{{ data.supportedLanguage.countryCode ~ ', ' ~ data.title }}
 						</button>
-					</h2>
+					</h{{ headingStartsAtNum }}>
 					
 					<div id="accordion-data-collapse-{{ data.id }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ data.id }}" data-bs-parent="#accordion-data-{{ data.id }}">
 						<div class="accordion-body">
 							<article>
-								<h3>{{ data.title }}</h3>
+								<h{{ headingStartsAtNum + 1 }}>{{ data.title }}</h{{ headingStartsAtNum + 1 }}>
 								<p>{{ languageCode(data.supportedLanguage.countryCode) }}</p>
 								
 								<table class="table">

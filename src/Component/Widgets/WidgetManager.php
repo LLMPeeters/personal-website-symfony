@@ -34,7 +34,7 @@ class WidgetManager implements SupportedLanguageHelperInterface
 		$widgetNames = [];
 		
 		foreach($this->getAllWidgets() as $widget) {
-			$widgetNames[$widget->getName()] = serialize([
+			$widgetNames[$widget->getIdentifier()] = serialize([
 				'entityName' => $widget::class,
 				'entityId' => $widget->getId(),
 			]);

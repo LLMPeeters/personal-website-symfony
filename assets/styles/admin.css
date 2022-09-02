@@ -4,3 +4,11 @@
 .list-browse h4 { font-size: 1.075rem; }
 .list-browse h5 { font-size: 1.05rem; }
 .list-browse h6 { font-size: 1.025rem; }
+
+.list-browse > article {
+	padding: 16px;
+}
+
+.detail {
+	padding: 8px;
+}

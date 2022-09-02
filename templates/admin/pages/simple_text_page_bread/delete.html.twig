@@ -5,7 +5,7 @@
 {% block main %}
     <h1>Delete page</h1>
 	
-	{% include 'admin/pages/simple_text_page_bread/readComponent.html.twig' with {'page': page} %}
+	{% include 'admin/pages/simple_text_page_bread/readComponent.html.twig' with {'page': page, 'headingStartsAtNum': 2} %}
 	
 	{{ form(delete_confirm_form) }}
 {% endblock %}

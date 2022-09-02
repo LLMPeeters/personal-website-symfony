@@ -40,18 +40,12 @@ class CreateNewPageDataSet
 					->setRoute(strval($page->getIdentifier()));
 				
 				$page->addData($newData);
-				
-				// $this->em->persist($newHotlink);
-				// $this->em->persist($newData);
 			}
-			
-			// $this->em->persist($page);
-			
-			// $this->em->flush();
 			
 			return true;
 		} catch(\Exception $e) {
 			dump($e->getMessage());
+			
 			return false;
 		}
 	}

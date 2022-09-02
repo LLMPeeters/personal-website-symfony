@@ -4,10 +4,8 @@
 
 {% block main %}
     <h1>Delete project</h1>
+	
+	{% include 'admin/projects/bread/readComponent.html.twig' with {'project': project, 'headingStartsAtNum': 2} %}
     
-    <section>
-        <p>Name: {{ project.name }}</p>
-        
-        {{ form(delete_confirm_form) }}
-    </section>
+	{{ form(delete_confirm_form) }}
 {% endblock %}

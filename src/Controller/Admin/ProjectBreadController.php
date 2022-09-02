@@ -8,6 +8,7 @@ use App\Form\ProjectType;
 use App\Entity\ComplexPage;
 use App\Service\FileRemover;
 use App\Service\FileUploader;
+use App\Form\ConfirmationType;
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,8 +47,11 @@ class ProjectBreadController extends AbstractController
 		
 		if($form->isSubmitted() && $form->isValid()) {
 			$widget = $project->getWidget();
-			$potentialImage = $form->get('widget')->get('uploadedImage')->get('image')->getData();
-			
+			$potentialImage = $form
+				->get('widget')
+				->get('uploadedImage')
+				->get('image')
+				->getData();
 			
 			if($potentialImage instanceof UploadedFile) {
 				$newImage = new Image();
@@ -84,27 +88,37 @@ class ProjectBreadController extends AbstractController
 		
 		if($form->isSubmitted() && $form->isValid()) {
 			$page = $project->getPage();
-			$hotlink = $page->getHotlink();
 			$widget = $project->getWidget();
-			$image = new Image();
+			$newImage = $form
+				->get('widget')
+				->get('uploadedImage')
+				->get('image')
+				->getData();
 			
-			$newImage = $form->get('widget')->get('uploadedImage')->get('image')->getData();
-			$image->setFileName($fileUploader->upload($newImage));
-			$hotlink->setPageNamespace($page::class);
-			$widget->setImage($image);
+			if($newImage instanceof UploadedFile) {
+				($image = new Image())
+					->setFileName($fileUploader->upload($newImage));
+				$widget->setImage($image);
+				
+				$em->persist($image);
+			}
+			
+			foreach($page->getData() as $data) {
+				$em->persist($data->getHotlink());
+				$em->persist($data);
+			}
+			
+			foreach($widget->getData() as $data) {
+				$em->persist($data);
+			}
 			
 			$em->persist($project);
 			$em->persist($page);
-			$em->persist($hotlink);
 			$em->persist($widget);
-			$em->persist($image);
+			
 			$em->flush();
 			
 			return $this->redirectToRoute('admin_project_read', ['id' => $project->getId()]);
-		}
-		
-		if($form->isSubmitted() && !$form->isValid()) {
-			dd($form);
 		}
 		
 		return $this->render('admin/projects/bread/add.html.twig', [
@@ -113,25 +127,35 @@ class ProjectBreadController extends AbstractController
 	}
 	
 	#[Route('/delete/{id}', name: 'admin_project_delete')]
-	public function delete(Request $request, EntityManagerInterface $em, Project $project): Response
+	public function delete(Request $request, EntityManagerInterface $em, Project $project, FileRemover $fileRemover, string $imageDirectory): Response
 	{
-		$form = $this->createFormBuilder()
-			->add('confirm', SubmitType::class, [
-				'label' => 'Confirm deletion?',
-				'attr' => [
-					'class' => 'btn btn-danger',
-				],
-			])
-			->getForm()
-		;
+		$form = $this->createForm(ConfirmationType::class);
 		$form->handleRequest($request);
 		
 		if($form->isSubmitted() && $form->isValid()) {
-			$em->remove($project->getWidget()->getImage());
-			$em->remove($project->getWidget());
-			$em->remove($project->getPage()->getHotlink());
-			$em->remove($project->getPage());
+			$page = $project->getPage();
+			$widget = $project->getWidget();
+			$potentialImage = $widget->getImage();
+			
+			foreach($page->getData() as $data) {
+				$em->remove($data->getHotlink());
+				$em->remove($data);
+			}
+			
+			foreach($widget->getData() as $data) {
+				$em->remove($data);
+			}
+			
+			if($potentialImage instanceof Image) {
+				$fileRemover->remove($imageDirectory.'/'.$potentialImage->getFileName());
+				
+				$em->remove($potentialImage);
+			}
+			
+			$em->remove($page);
+			$em->remove($widget);
 			$em->remove($project);
+			
 			$em->flush();
 			
 			return $this->redirectToRoute('admin_project_browse');

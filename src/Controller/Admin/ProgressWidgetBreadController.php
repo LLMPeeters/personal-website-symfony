@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ProgressWidget;
+use App\Form\ConfirmationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ProgressWidgetRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,10 +73,7 @@ class ProgressWidgetBreadController extends AbstractController
     #[Route('/delete/{id}', name: 'admin_progress_widget_delete')]
     public function delete(Request $request, EntityManagerInterface $em, ProgressWidget $widget): Response
     {
-        $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, ['label' => 'Confirm deletion?'])
-            ->getForm()
-        ;
+		$form = $this->createForm(ConfirmationType::class);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {

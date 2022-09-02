@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\SimpleTextPage;
+use App\Form\ConfirmationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\SimpleTextPageRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,15 +79,7 @@ class SimpleTextPageBreadController extends AbstractController
     #[Route('/delete/{id}', name: 'admin_simple_text_page_delete')]
     public function delete(Request $request, EntityManagerInterface $em, SimpleTextPage $page): Response
     {
-        $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, [
-                'label' => 'Confirm deletion?',
-                'attr' => [
-                    'class' => 'btn btn-danger',
-                ],
-            ])
-            ->getForm()
-        ;
+		$form = $this->createForm(ConfirmationType::class);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {

@@ -2,6 +2,7 @@
 
 namespace App\Component\Pages\FormType\Page;
 
+use App\Entity\ComplexPage;
 use App\Entity\AbstractPage;
 use App\Service\CreateNewPageDataSet;
 use Symfony\Component\Form\AbstractType;
@@ -18,6 +19,10 @@ class AbstractPageType extends AbstractType
 	
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+		if(!isset($options['data']) || !$options['data'] instanceof AbstractPage) {
+			throw new \LogicException('The data option for AbstractPageType and its descendants should be set to an AbstractPage class.');
+		}
+		
 		if(is_null($options['data']->getId())) {
 			$this->createSet->create($options['data']);
 		}
