@@ -4,7 +4,7 @@ namespace App\Component\Pages\FormType\Page;
 
 use App\Entity\ComplexPage;
 use App\Entity\AbstractPage;
-use App\Service\CreateNewPageDataSet;
+use App\Service\CreateNewDataSets;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class AbstractPageType extends AbstractType
 {
 	public function __construct(
-		private CreateNewPageDataSet $createSet
+		private CreateNewDataSets $createSets
 	) {}
 	
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -24,7 +24,7 @@ class AbstractPageType extends AbstractType
 		}
 		
 		if(is_null($options['data']->getId())) {
-			$this->createSet->create($options['data']);
+			$this->createSets->createForPage($options['data']);
 		}
 		
         $builder

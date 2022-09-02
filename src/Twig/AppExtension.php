@@ -13,15 +13,19 @@ use App\Component\Pages\ComplexPageItemsEnum;
 
 class AppExtension extends AbstractExtension
 {
+	private array $uniqueIntegers = [];
+	
 	public function __construct(
 		private ManagerRegistry $doctrine,
 		private string $publicProjectsDir,
-		private string $publicImageDir
+		private string $publicImageDir,
 	) {}
 	
 	public function getFunctions()
 	{
 		return [
+			new TwigFunction('unserialize', [$this, 'unserialize']),
+			new TwigFunction('uniqueInt', [$this, 'getUniqueInteger']),
 			new TwigFunction('languageCode', [$this, 'getLanguageFromCode']),
 			new TwigFunction('name', [$this, 'className']),
 			new TwigFunction('getEnv', [$this, 'getEnvVar']),
@@ -30,6 +34,20 @@ class AppExtension extends AbstractExtension
 			new TwigFunction('isProgressWidget', [$this, 'isProgressWidget']),
 			new TwigFunction('isProjectWidget', [$this, 'isProjectWidget']),
 		];
+	}
+	
+	public function unserialize(string $input): mixed
+	{
+		return unserialize($input);
+	}
+	
+	public function getUniqueInteger(): int
+	{
+		$num = count($this->uniqueIntegers);
+		
+		$this->uniqueIntegers[] = $num;
+		
+		return $num;
 	}
 	
 	public function getLanguageFromCode(string $code): string

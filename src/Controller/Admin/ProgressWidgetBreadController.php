@@ -54,12 +54,15 @@ class ProgressWidgetBreadController extends AbstractController
     #[Route('/add', name: 'admin_progress_widget_add')]
     public function add(Request $request, EntityManagerInterface $em): Response
     {
-		// TODO: Widgets need to automatically make Data objects per language, just as Pages do
         $widget = new ProgressWidget();
         $form = $this->createForm(ProgressWidgetType::class, $widget);
         $form->handleRequest($request);
 		
         if($form->isSubmitted() && $form->isValid()) {
+			foreach($widget->getData() as $data) {
+				$em->persist($data);
+			}
+			
             $em->persist($widget);
             $em->flush();
             
@@ -78,7 +81,12 @@ class ProgressWidgetBreadController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
+			foreach($widget->getData() as $data) {
+				$em->remove($data);
+			}
+			
             $em->remove($widget);
+			
             $em->flush();
             
             return $this->redirectToRoute('admin_progress_widget_browse');
