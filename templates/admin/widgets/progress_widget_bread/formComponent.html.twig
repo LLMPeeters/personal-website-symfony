@@ -1,0 +1,15 @@
+{# var string submitButtonText #}
+{# var FormView form #}
+
+{{ form_start(form) }}
+	{# TODO: wire up all the ProgressWidgetData objects as well as the ProgressWidget #}
+	{{ form_row(form.identifier) }}
+	{% for data in form.data %}
+		{{ form_row(data.name) }}
+		
+		{% for bar in data.progressBars %}
+			{{ form_row(bar.name) }}
+			{{ form_row(bar.percentage) }}
+		{% endfor %}
+	{% endfor %}
+{{ form_end(form) }}
