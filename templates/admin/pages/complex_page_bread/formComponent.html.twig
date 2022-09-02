@@ -1,14 +1,16 @@
 {# var FormView data #}
 {# var ComplexPageData data.vars.data #}
-<div class="accordion" id="accordion-data-{{ loop.index }}">
+
+{% set num = uniqueInt() %}
+<div class="accordion" id="accordion-data-{{ num }}-{{ loop.index }}">
 	<div class="accordion-item">
-		<h2 class="accordion-header" id="accordion-data-heading-{{ loop.index }}">
-			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ loop.index }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ loop.index }}">
+		<h2 class="accordion-header" id="accordion-data-heading-{{ num }}-{{ loop.index }}">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ num }}-{{ loop.index }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ num }}-{{ loop.index }}">
 				{{ data.vars.data.supportedLanguage.countryCode ~ ', ' ~ data.vars.data.title }}
 			</button>
 		</h2>
 		
-		<div id="accordion-data-collapse-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ loop.index }}" data-bs-parent="#accordion-data-{{ loop.index }}">
+		<div id="accordion-data-collapse-{{ num }}-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ num }}-{{ loop.index }}" data-bs-parent="#accordion-data-{{ num }}-{{ loop.index }}">
 			<div class="accordion-body">
 				{{ form_row(data.title) }}
 				{{ form_row(data.navName) }}

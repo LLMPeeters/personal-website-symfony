@@ -31,6 +31,6 @@
 	<section>
 		<h{{ headingStartsAtNum }}>Widget information</h{{ headingStartsAtNum }}>
 		
-		<p>Placeholder</p>
+		{% include 'admin/widgets/project_widget_bread/readComponent.html.twig' with {'widget': project.widget, 'headingStartsAtNum': headingStartsAtNum + 1} %}
 	</section>
 </article>

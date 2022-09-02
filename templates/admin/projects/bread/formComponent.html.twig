@@ -14,7 +14,10 @@
 		
 		{{ form_row(form.widget.identifier) }}
 		{{ form_row(form.widget.uploadedImage) }}
-		{{ form_row(form.widget.data) }}
+		
+		{% for data in form.widget.data %}
+			{% include 'admin/widgets/project_widget_bread/formComponent.html.twig' with {'data': data, 'form': form} %}
+		{% endfor %}
 	</fieldset>
 	
 	<fieldset>
