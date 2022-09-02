@@ -1,6 +1,7 @@
 {# var int headingStartsAtNum #}
 {# var ComplexPage page #}
 
+{% set num = uniqueInt() %}
 <article class="detail border border-2">
 	<h{{ headingStartsAtNum }}>{{ page.identifier }}</h{{ headingStartsAtNum }}>
 	
@@ -23,15 +24,15 @@
 	
 	<section>
 		{% for data in page.data %}
-			<div class="accordion" id="accordion-data-{{ data.id }}">
+			<div class="accordion" id="accordion-data-{{ num }}-{{ data.id }}">
 				<div class="accordion-item">
-					<h{{ headingStartsAtNum }} class="accordion-header" id="accordion-data-heading-{{ data.id }}">
-						<button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ data.id }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ data.id }}">
+					<h{{ headingStartsAtNum }} class="accordion-header" id="accordion-data-heading-{{ num }}-{{ data.id }}">
+						<button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ num }}-{{ data.id }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ num }}-{{ data.id }}">
 							{{ data.supportedLanguage.countryCode ~ ', ' ~ data.title }}
 						</button>
 					</h{{ headingStartsAtNum }}>
 					
-					<div id="accordion-data-collapse-{{ data.id }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ data.id }}" data-bs-parent="#accordion-data-{{ data.id }}">
+					<div id="accordion-data-collapse-{{ num }}-{{ data.id }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ num }}-{{ data.id }}" data-bs-parent="#accordion-data-{{ num }}-{{ data.id }}">
 						<div class="accordion-body">
 							<article>
 								<h{{ headingStartsAtNum + 1 }}>{{ data.title }}</h{{ headingStartsAtNum + 1 }}>
@@ -65,11 +66,11 @@
 										<tr>
 											<td>Elements</td>
 											<td>
-												<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#raw-html-{{ data.id }}">
+												<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#raw-html-{{ num }}-{{ data.id }}">
 													View
 												</button>
 												
-												<div class="modal fade" id="raw-html-{{ data.id }}" tabindex="-1" aria-hidden="true">
+												<div class="modal fade" id="raw-html-{{ num }}-{{ data.id }}" tabindex="-1" aria-hidden="true">
 													<div class="modal-dialog modal-xl">
 														<div class="modal-content">
 															<div class="modal-body">
