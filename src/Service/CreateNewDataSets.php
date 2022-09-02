@@ -38,8 +38,6 @@ class CreateNewDataSets
 			
 			return true;
 		} catch(\Exception $e) {
-			dump($e->getMessage());
-			
 			return false;
 		}
 	}
@@ -73,8 +71,6 @@ class CreateNewDataSets
 			
 			return true;
 		} catch(\Exception $e) {
-			dump($e->getMessage());
-			
 			return false;
 		}
 	}

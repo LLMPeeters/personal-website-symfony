@@ -19,4 +19,21 @@ enum PageTypeEnum: string
 			ComplexPage::class => ComplexPageData::class,
 		};
 	}
+	
+	static public function tryByProxy(string $input): ?self
+	{
+		$result = self::tryFrom($input);
+		
+		if(!$result instanceof self) {
+			foreach(self::cases() as $case) {
+				if(is_subclass_of($input, $case->value)) {
+					return $case;
+				}
+			}
+			
+			return null;
+		}
+		
+		return $result;
+	}
 }

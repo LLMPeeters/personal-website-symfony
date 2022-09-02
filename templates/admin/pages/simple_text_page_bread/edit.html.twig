@@ -6,12 +6,14 @@
 	<h1>Edit page</h1>
 
 	{{ form_start(edit_form) }}
+		{{ form_row(edit_form.identifier) }}
+		{{ form_row(edit_form.addToNav) }}
+		{{ form_row(edit_form.public) }}
+		
 		{% for data in edit_form.data %}
 			{% include 'admin/pages/simple_text_page_bread/formComponent.html.twig' with {'data': data} %}
 		{% endfor %}
 
-		{{ form_row(edit_form.identifier) }}
-		{{ form_row(edit_form.addToNav) }}
-		<input type="submit" value="Edit page">
+		<input class="btn btn-primary" type="submit" value="Edit page">
 	{{ form_end(edit_form) }}
 {% endblock %}

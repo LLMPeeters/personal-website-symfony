@@ -94,7 +94,13 @@
 																			</tr>
 																			<tr>
 																				<td>Widget (if applicable)</td>
-																				<td>{{ unserialize(element.widgetChoices).entityName }}</td>
+																				<td>
+																					{% if checkType(element.widgetChoices, 'string') %}
+																						{{ unserialize(element.widgetChoices).entityName }}
+																					{% else %}
+																						<p>None</p>
+																					{% endif %}
+																				</td>
 																			</tr>
 																		</tbody>
 																	</table>
