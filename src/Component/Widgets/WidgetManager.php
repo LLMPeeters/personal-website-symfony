@@ -4,6 +4,7 @@ namespace App\Component\Widgets;
 
 use App\Entity\SupportedLanguage;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Component\Widgets\WidgetTypeEnum;
 use App\Component\Widgets\WidgetTypesEnum;
 use App\Component\SupportedLanguages\SupportedLanguageHelperInterface;
 
@@ -46,7 +47,7 @@ class WidgetManager implements SupportedLanguageHelperInterface
 	public function deleteDataRelatedToLang(SupportedLanguage $lang): bool
 	{
 		try {
-			foreach(WidgetTypesEnum::cases() as $widgetType) {
+			foreach(WidgetTypeEnum::cases() as $widgetType) {
 				$dataName = $widgetType->getDataType();
 				$repo = $this->em->getRepository($dataName);
 				$widgetData = $repo->findBy(['supportedLanguage' => $lang]);
@@ -65,7 +66,7 @@ class WidgetManager implements SupportedLanguageHelperInterface
 	public function fillDataForNewLang(SupportedLanguage $lang): bool
 	{
 		try {
-			foreach(WidgetTypesEnum::cases() as $widgetType) {
+			foreach(WidgetTypeEnum::cases() as $widgetType) {
 				$dataName = $widgetType->getDataType();
 				$repo = $this->em->getRepository($widgetType->value);
 				$widgets = $repo->findAll();
@@ -73,7 +74,7 @@ class WidgetManager implements SupportedLanguageHelperInterface
 				foreach($widgets as $widget) {
 					($newData = new $dataName())
 						->setSupportedLanguage($lang)
-						->setTitle($page->getIdentifier())
+						->setTitle($widget->getIdentifier())
 						->setWidget($widget);
 					
 					$this->em->persist($newData);

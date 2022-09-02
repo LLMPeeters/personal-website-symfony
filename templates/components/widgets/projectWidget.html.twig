@@ -1,19 +1,18 @@
-{# var ProjectWidget widget #}
+{# var ProjectWidgetData widgetData #}
 
 <section class="project-widget widget">
-	<div class="image"{% if widget.image is not null %}
-		style="background-image: url('{{ getEnv('PUBLIC_IMAGE_DIR')~'/'~widget.image.fileName }}')"
+	<div class="image"{% if widgetData.widget.image is not null %}
+		style="background-image: url('{{ getEnv('PUBLIC_IMAGE_DIR')~'/'~widgetData.widget.image.fileName }}')"
 	{% endif %}>
-		<p><a href="{{ widget.project.page.hotlink.route }}">{{ widget.project.name }}</a></p>
-		
-		{% if widget.project.hasCode %}
-			<p><a target="_BLANK" href="/{{ getEnv('PUBLIC_PROJECTS_DIR')~'/'~widget.project.page.hotlink.route }}">Go to code</a></p>
+		<p><a href="/{{ getProjectUrl(widgetData) }}">{{ widgetData.widget.project.name }}</a></p>
+		{% if widgetData.widget.project.hasCode %}
+			<p><a target="_BLANK" href="/{{ getEnv('PUBLIC_PROJECTS_DIR')~'/'~widgetData.widget.project.page.hotlink.route }}">Go to code</a></p>
 		{% endif %}
 	</div>
 	
 	<article>
-		<h1>{{ widget.title }}</h1>
+		<h1>{{ widgetData.title }}</h1>
 		
-		<p>{{ widget.summary }}</p>
+		<p>{{ widgetData.summary }}</p>
 =	</article>
 </section>

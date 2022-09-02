@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Entity\Hotlink;
+use App\Entity\AbstractPage;
+use App\Entity\AbstractPageData;
 use App\Entity\SupportedLanguage;
 use App\Component\Pages\PageTypeEnum;
 use App\Repository\HotlinkRepository;
@@ -19,6 +21,10 @@ class RouteValidifier
 	
 	public function isLanguageValid(string $route): bool
 	{
+		if(!preg_match('/^\C\C\//', $route)) {
+			return false;
+		}
+		
 		$supportedLanguage = $this->slRepo->findOneBy(['countryCode' => substr($route, 0, 2)]);
 		
 		return $supportedLanguage instanceof SupportedLanguage;
@@ -70,6 +76,25 @@ class RouteValidifier
 					return '/'.$results[0]->getRoute();
 				}
 			}
+		}
+		
+		return false;
+	}
+	
+	public function getUrlFromLangAndPage(AbstractPage $page, SupportedLanguage $lang): false|string
+	{
+		$pageType = PageTypeEnum::tryByProxy($page::class);
+		
+		if(!$pageType instanceof PageTypeEnum) {
+			return false;
+		}
+		
+		$dataName = $pageType->getDataType();
+		$repo = $this->em->getRepository($dataName);
+		$data = $repo->findOneBy(['page' => $page, 'supportedLanguage' => $lang]);
+		
+		if($data instanceof AbstractPageData) {
+			return $data->getRoute();
 		}
 		
 		return false;

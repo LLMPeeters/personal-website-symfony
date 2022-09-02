@@ -16,7 +16,7 @@ class FileRemover
 				
 				return true;
 			} catch(FileException $e) {
-				dd($e);
+				return false;
 			}
 		}
 		
