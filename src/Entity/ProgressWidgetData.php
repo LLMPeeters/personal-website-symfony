@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ProgressWidgetDataRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AbstractWidgetData;
+use App\Repository\ProgressWidgetDataRepository;
 
 #[ORM\Entity(repositoryClass: ProgressWidgetDataRepository::class)]
-class ProgressWidgetData
+class ProgressWidgetData extends AbstractWidgetData
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

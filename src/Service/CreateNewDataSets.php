@@ -4,18 +4,47 @@ namespace App\Service;
 
 use App\Entity\Hotlink;
 use App\Entity\AbstractPage;
+use App\Entity\AbstractWidget;
 use App\Component\Pages\PageTypeEnum;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Component\Widgets\WidgetTypeEnum;
 use App\Repository\SupportedLanguageRepository;
 
-class CreateNewPageDataSet
+class CreateNewDataSets
 {
 	public function __construct(
 		private SupportedLanguageRepository $slRepo,
 		private EntityManagerInterface $em
 	) {}
 	
-	public function create(AbstractPage $page): bool
+	public function createForWidget(AbstractWidget $widget): bool
+	{
+		try {
+			foreach($this->slRepo->findAll() as $lang) {
+				$widgetType = WidgetTypeEnum::tryFrom($widget::class);
+				
+				if(!$widgetType instanceof WidgetTypeEnum) {
+					return false;
+				}
+				
+				$dataName = $widgetType->getDataType();
+				
+				($newData = new $dataName())
+					->setSupportedLanguage($lang)
+					->setWidget($widget);
+				
+				$widget->addData($newData);
+			}
+			
+			return true;
+		} catch(\Exception $e) {
+			dump($e->getMessage());
+			
+			return false;
+		}
+	}
+	
+	public function createForPage(AbstractPage $page): bool
 	{
 		try {
 			foreach($this->slRepo->findAll() as $lang) {

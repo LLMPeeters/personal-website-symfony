@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectWidgetDataRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AbstractWidgetData;
+use App\Repository\ProjectWidgetDataRepository;
 
 #[ORM\Entity(repositoryClass: ProjectWidgetDataRepository::class)]
-class ProjectWidgetData
+class ProjectWidgetData extends AbstractWidgetData
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

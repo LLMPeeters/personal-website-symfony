@@ -63,7 +63,7 @@
 										</tr>
 										<tr>
 										<tr>
-											<td>Raw HTML</td>
+											<td>Elements</td>
 											<td>
 												<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#raw-html-{{ data.id }}">
 													View
@@ -93,7 +93,7 @@
 																			</tr>
 																			<tr>
 																				<td>Widget (if applicable)</td>
-																				<td>{{ element.widgetChoices }}</td>
+																				<td>{{ unserialize(element.widgetChoices).entityName }}</td>
 																			</tr>
 																		</tbody>
 																	</table>
