@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ComplexPage;
+use App\Form\ConfirmationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ComplexPageRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,15 +79,7 @@ class ComplexPageBreadController extends AbstractController
     #[Route('/delete/{id}', name: 'admin_complex_page_delete')]
     public function delete(Request $request, EntityManagerInterface $em, ComplexPage $page): Response
     {
-        $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, [
-                'label' => 'Confirm deletion?',
-                'attr' => [
-                    'class' => 'btn btn-danger',
-                ],
-            ])
-            ->getForm()
-        ;
+		$form = $this->createForm(ConfirmationType::class);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {

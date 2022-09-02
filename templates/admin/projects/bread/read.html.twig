@@ -3,21 +3,9 @@
 {% block title %}Read project{% endblock %}
 
 {% block main %}
-    <h1>Details</h1>
-
-    <section>
-        <p>
-            <a class="btn btn-outline-primary" href="{{ path('admin_project_browse') }}" target="_SELF">
-                <span><i class="fa-solid fa-list"></i> Browse</span>
-            </a>
-            <a class="btn btn-outline-primary" href="{{ path('admin_project_edit', {id: project.id}) }}" target="_SELF">
-                <span><i class="fa-solid fa-pencil"></i> Edit</span>
-            </a>
-            <a class="btn btn-outline-danger" href="{{ path('admin_project_delete', {id: project.id}) }}" target="_SELF">
-                <span><i class="fa-solid fa-trash"></i> Delete</span>
-            </a>
-        </p>
-        <p>Name: {{ project.name }}</p>
-        <p>Route: {{ project.page.hotlink.route }}</p>
-    </section>
+	<section>
+		<h1>Project details</h1>
+		
+		{% include 'admin/projects/bread/readComponent.html.twig' with {'project': project, 'headingStartsAtNum': 2} %}
+	</section>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Form\ConfirmationType;
 use App\Entity\SupportedLanguage;
 use App\Form\SupportedLanguageType;
 use App\Service\CheckEntityProperty;
@@ -61,10 +62,7 @@ class SupportedLanguageBreadController extends AbstractController
     #[Route('/delete/{id}', name: 'admin_supported_language_delete')]
     public function delete(Request $request, EntityManagerInterface $em, SupportedLanguage $language, CheckEntityProperty $check): Response
     {
-        $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, ['label' => 'Confirm deletion?'])
-            ->getForm()
-        ;
+		$form = $this->createForm(ConfirmationType::class);
         $form->handleRequest($request);
         $isMain = $check->doesEntityHaveUniquePropertyValue('main', $language, true);
 		

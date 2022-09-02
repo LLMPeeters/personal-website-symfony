@@ -7,7 +7,7 @@
 	
 	<section class="list-browse">
 		{% for page in pages %}
-			{% include 'admin/pages/complex_page_bread/readComponent.html.twig' with {'page': page} %}
+			{% include 'admin/pages/complex_page_bread/readComponent.html.twig' with {'page': page, 'headingStartsAtNum': 2} %}
 		{% else %}
 			<p>None!</p>
 		{% endfor %}

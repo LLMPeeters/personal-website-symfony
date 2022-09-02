@@ -22,7 +22,7 @@ abstract class AbstractPage
 	abstract public function getId(): ?int;
 	abstract public function getData(): Collection;
 
-	
+	// TODO: find out if I can use CreateNewPageDataSet->create() here or if theres a doctrine event for 'oncreation'
     public function getIdentifier(): ?string
     {
         return $this->identifier;

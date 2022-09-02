@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Component\Widgets\FormType\Widget;
+namespace App\Component\Widgets\FormType\Data;
 
 use App\Entity\ProjectWidgetData;
 use Symfony\Component\Form\FormBuilderInterface;
