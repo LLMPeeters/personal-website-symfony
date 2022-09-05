@@ -30,6 +30,7 @@ class ProjectType extends AbstractType
 		}
 		
         $builder
+			->add('identifier', TextType::class)
 			->add('name', TextType::class)
 			->add('hasCode', CheckboxType::class, [
 				'required' => false,

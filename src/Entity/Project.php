@@ -27,6 +27,9 @@ class Project
     #[ORM\JoinColumn(nullable: false)]
     private $widget;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $identifier;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class Project
     public function setWidget(ProjectWidget $widget): self
     {
         $this->widget = $widget;
+
+        return $this;
+    }
+
+    public function getIdentifier(): ?string
+    {
+        return $this->identifier;
+    }
+
+    public function setIdentifier(string $identifier): self
+    {
+        $this->identifier = $identifier;
 
         return $this;
     }
