@@ -12,8 +12,9 @@
 		
 		<div id="accordion-data-collapse-{{ num }}-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ num }}-{{ loop.index }}" data-bs-parent="#accordion-data-{{ num }}-{{ loop.index }}">
 			<div class="accordion-body">
-				{{ form_row(data.title) }}
+				<div class="mb-3">{{ form_row(data.title) }}</div>
 				{{ form_row(data.navName) }}
+				{{ form_row(data.metaDescription) }}
 				{{ form_row(data.hotlink) }}
 				{{ form_row(data.elements) }}
 			</div>

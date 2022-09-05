@@ -2,7 +2,7 @@
 
 <section class="project-widget widget">
 	<div class="image"{% if widgetData.widget.image is not null %}
-		style="background-image: url('{{ getEnv('PUBLIC_IMAGE_DIR')~'/'~widgetData.widget.image.fileName }}')"
+		style="background-image: url('/{{ getEnv('PUBLIC_IMAGE_DIR')~'/'~widgetData.widget.image.fileName }}')"
 	{% endif %}>
 		<p><a href="/{{ getProjectUrl(widgetData) }}">{{ widgetData.widget.project.name }}</a></p>
 		{% if widgetData.widget.project.hasCode %}

@@ -17,6 +17,7 @@ use App\Component\Widgets\WidgetTypeEnum;
 use App\Repository\ComplexPageRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Component\Pages\ComplexPageItemsEnum;
+use App\Repository\SupportedLanguageRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AppExtension extends AbstractExtension
@@ -29,12 +30,16 @@ class AppExtension extends AbstractExtension
 		private string $publicImageDir,
 		private RouteValidifier $rValidifier,
 		private RequestStack $requestStack,
-		private ProjectHelper $pHelper
+		private ProjectHelper $pHelper,
+		private SupportedLanguageRepository $slRepo
 	) {}
 	
 	public function getFunctions()
 	{
 		return [
+			new TwigFunction('getLangs', [$this, 'getSupportedLanguages']),
+			new TwigFunction('getHost', [$this, 'getHostname']),
+			new TwigFunction('getUrl', [$this, 'getCurrentAbsoluteUrl']),
 			new TwigFunction('checkType', [$this, 'checkDataType']),
 			new TwigFunction('unserialize', [$this, 'unserialize']),
 			new TwigFunction('uniqueInt', [$this, 'getUniqueInteger']),
@@ -47,6 +52,25 @@ class AppExtension extends AbstractExtension
 			new TwigFunction('isProjectWidget', [$this, 'isProjectWidget']),
 			new TwigFunction('getProjectUrl', [$this, 'getProjectUrlThroughWidgetData']),
 		];
+	}
+	
+	public function getSupportedLanguages(): array
+	{
+		return $this->slRepo->findAll();
+	}
+	
+	public function getHostname(): string
+	{
+		$url = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
+		
+		return $url;
+	}
+	
+	public function getCurrentAbsoluteUrl(): string
+	{
+		$url = $this->requestStack->getCurrentRequest()->getUri();
+		
+		return $url;
 	}
 	
 	public function checkDataType(mixed $input, string $checkIfThisType): bool
@@ -87,7 +111,7 @@ class AppExtension extends AbstractExtension
 		try {
 			$data = unserialize($serializedData);
 			
-			// Bad fix TODO
+			// PROBLEM: Bad fix
 			if(preg_match('/^Proxies\\\__CG__\\\/', $data['entityName'])) {
 				$data['entityName'] = substr($data['entityName'], 15);
 			}
