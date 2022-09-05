@@ -18,13 +18,16 @@ abstract class AbstractPageData
     private $supportedLanguage;
 
 	#[Assert\Valid]
-    #[Assert\Type(Hotlink::class)]
-    #[ORM\OneToOne(targetEntity: Hotlink::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private $hotlink;
+	#[Assert\Type(Hotlink::class)]
+	#[ORM\OneToOne(targetEntity: Hotlink::class, cascade: ['persist', 'remove'])]
+	#[ORM\JoinColumn(nullable: false)]
+	private $hotlink;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $navName;
+
+    #[ORM\Column(type: 'string', length: 500, nullable: true)]
+    private $metaDescription;
 
 	abstract public function getId(): ?int;
 	abstract public function getPage(): AbstractPage;
@@ -78,6 +81,18 @@ abstract class AbstractPageData
     public function setNavName(string $navName): self
     {
         $this->navName = $navName;
+
+        return $this;
+    }
+
+    public function getMetaDescription(): ?string
+    {
+        return $this->metaDescription;
+    }
+
+    public function setMetaDescription(string $metaDescription): self
+    {
+        $this->metaDescription = $metaDescription;
 
         return $this;
     }

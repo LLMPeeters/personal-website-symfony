@@ -48,6 +48,7 @@ class PageManager implements SupportedLanguageHelperInterface
 				// Loop through each page to add the data entity
 				foreach($pages as $page) {
 					($newHotlink = new Hotlink())
+						->setSupportedLanguage($lang)
 						->setRoute(strval($page->getIdentifier()))
 						->setPageDataNamespace($dataName)
 						->setPageNamespace($page::class);
