@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Component\Pages\PageDataTypeEnum;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-// TODO: Removing all of a language's related data should be done in a service that should be put into the proper Enum or Manager as well
 class SupportedLanguageListener
 {
 	public function __construct(
@@ -34,13 +33,9 @@ class SupportedLanguageListener
 		if($lang->isMain()) {
 			$this->resetMainProperty($lang, $event->getObjectManager());
 		}
-    }
-	
-	public function postPersist(SupportedLanguage $lang, LifecycleEventArgs $event): void
-	{
 		$this->pManager->fillDataForNewLang($lang);
 		$this->wManager->fillDataForNewLang($lang);
-	}
+    }
 	
 	public function preRemove(SupportedLanguage $lang, LifecycleEventArgs $event): void
 	{
