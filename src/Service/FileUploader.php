@@ -20,11 +20,12 @@ class FileUploader
         $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 		
         try {
+			
             $file->move($this->getimageDirectory(), $fileName);
         } catch (FileException $e) {
 			return false;
         }
-
+		
         return $fileName;
     }
 

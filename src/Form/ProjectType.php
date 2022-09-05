@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Project;
 use App\Entity\ComplexPage;
 use App\Entity\ProjectWidget;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Component\Pages\FormType\Page\ComplexPageType;
@@ -15,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ProjectType extends AbstractType
 {
+	public function __construct(private EntityManagerInterface $em) {}
+	
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 		if(!isset($options['data']) || !$options['data'] instanceof Project) {
@@ -28,6 +31,14 @@ class ProjectType extends AbstractType
 		if(!($complexPage = $options['data']->getPage()) instanceof ComplexPage) {
 			$complexPage = new ComplexPage();
 		}
+		
+		// $this->em->remove($options['data']->getWidget()->getImage());
+		// $options['data']->getWidget()->setImage(null);
+		
+		// $this->em->persist($options['data']->getWidget());
+		
+		// $this->em->flush();
+		// dd(true);
 		
         $builder
 			->add('identifier', TextType::class)
