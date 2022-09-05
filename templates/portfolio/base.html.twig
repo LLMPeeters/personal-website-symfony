@@ -66,9 +66,9 @@
                 </div>
 
                 <div id="header-buttons">
-					{% if nav_pages is defined and nav_pages is iterable %}
-						{% for page in nav_pages %}
-							<a class="button" href="{{ page.hotlink.route }}">{{ page.name }}</a>
+					{% if nav_data is defined and nav_data is iterable %}
+						{% for data in nav_data %}
+							<a class="button" href="/{{ data.route }}">{{ data.navName }}</a>
 						{% endfor %}
 					{% endif %}
                 </div>
@@ -77,7 +77,8 @@
                     <h1>Lester Peeters</h1>
                     <p>Webontwikkelaar</p>
 
-                    <p class="language-select"></p>
+					{# TODO: Make a select box for languages, to switch between other pageData of this page #}
+                    <div class="language-select"></div>
                 </div>
             </div>
         {% endblock %}
@@ -106,7 +107,7 @@
 					
 					<ul>
 						{% for key, page_data in sitemap_data %}
-							<li><a href="{{ key }}">{{ page_data }}</a></li>
+							<li><a href="/{{ key }}">{{ page_data }}</a></li>
 						{% endfor %}
 					</ul>
 				</section>

@@ -3,38 +3,26 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\AbstractWidgetData;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\MappedSuperclass]
 abstract class AbstractWidget
 {
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    private $name;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $title;
+    private $identifier;
 
     abstract public function getId(): ?int;
+	abstract public function getData(): Collection;
     
-    public function getName(): string
+    public function getIdentifier(): string
     {
-        return $this->name;
+        return $this->identifier;
     }
     
-    public function setName(string $name): self
+    public function setIdentifier(string $identifier): self
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
+        $this->identifier = $identifier;
 
         return $this;
     }

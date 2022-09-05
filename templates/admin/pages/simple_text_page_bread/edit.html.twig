@@ -3,19 +3,17 @@
 {% block title %}Browse pages{% endblock %}
 
 {% block main %}
-<h1>Edit page</h1>
+	<h1>Edit page</h1>
 
-{{ form_start(edit_form) }}
+	{{ form_start(edit_form) }}
+		{{ form_row(edit_form.identifier) }}
+		{{ form_row(edit_form.addToNav) }}
+		{{ form_row(edit_form.public) }}
+		
+		{% for data in edit_form.data %}
+			{% include 'admin/pages/simple_text_page_bread/formComponent.html.twig' with {'data': data} %}
+		{% endfor %}
 
-{{ form_row(edit_form.rawHtml, {'attr': {'class': 'ckeditor-classic-instance', 'required': false}}) }}
-
-{{ form_row(edit_form.title) }}
-{{ form_row(edit_form.name) }}
-{{ form_row(edit_form.addToNav) }}
-{{ form_row(edit_form.hotlink) }}
-
-<input type="submit" value="Edit page">
-
-{{ form_end(edit_form) }}
-
+		<input class="btn btn-primary" type="submit" value="Edit page">
+	{{ form_end(edit_form) }}
 {% endblock %}

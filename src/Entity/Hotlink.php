@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\HotlinkRepository;
+use App\Entity\AbstractPageData;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\HotlinkRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HotlinkRepository::class)]
@@ -19,12 +20,15 @@ class Hotlink
         match: true,
         message: 'A hotlink route can only contain letters and underscores.',
     )]
-    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $route;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $pageNamespace;
-    
+
+    #[ORM\Column(type: 'string', length: 500)]
+    private $pageDataNamespace;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +58,18 @@ class Hotlink
     public function setPageNamespace(string $pageNamespace): self
     {
         $this->pageNamespace = $pageNamespace;
+
+        return $this;
+    }
+
+    public function getPageDataNamespace(): ?string
+    {
+        return $this->pageDataNamespace;
+    }
+
+    public function setPageDataNamespace(string $pageDataNamespace): self
+    {
+        $this->pageDataNamespace = $pageDataNamespace;
 
         return $this;
     }

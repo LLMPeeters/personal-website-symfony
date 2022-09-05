@@ -2,15 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\ProgressWidget;
+use App\Form\ConfirmationType;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ProgressWidgetRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Component\Widgets\FormType\ProgressWidgetType;
-use App\Entity\ProgressWidget;
-use App\Repository\ProgressWidgetRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Component\Widgets\FormType\Widget\ProgressWidgetType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/widgets/progress_widget')]
 class ProgressWidgetBreadController extends AbstractController
@@ -56,8 +57,12 @@ class ProgressWidgetBreadController extends AbstractController
         $widget = new ProgressWidget();
         $form = $this->createForm(ProgressWidgetType::class, $widget);
         $form->handleRequest($request);
-        
+		
         if($form->isSubmitted() && $form->isValid()) {
+			foreach($widget->getData() as $data) {
+				$em->persist($data);
+			}
+			
             $em->persist($widget);
             $em->flush();
             
@@ -72,14 +77,16 @@ class ProgressWidgetBreadController extends AbstractController
     #[Route('/delete/{id}', name: 'admin_progress_widget_delete')]
     public function delete(Request $request, EntityManagerInterface $em, ProgressWidget $widget): Response
     {
-        $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, ['label' => 'Confirm deletion?'])
-            ->getForm()
-        ;
+		$form = $this->createForm(ConfirmationType::class);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
+			foreach($widget->getData() as $data) {
+				$em->remove($data);
+			}
+			
             $em->remove($widget);
+			
             $em->flush();
             
             return $this->redirectToRoute('admin_progress_widget_browse');

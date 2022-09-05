@@ -1,9 +1,9 @@
 {% extends 'portfolio/base.html.twig' %}
 
-{% block title %}Placeholder{% endblock %}
+{% block title %}{{ page_data.title }}{% endblock %}
 
 {% block main %}
     <section class="content">
-        {{ page.rawHtml|raw }}
+        {{ page_data.rawHtml|raw }}
     </section>
 {% endblock %}

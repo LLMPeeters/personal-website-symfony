@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Component\Widgets\FormType;
+namespace App\Component\Widgets\FormType\Widget;
 
-use App\Entity\Project;
 use App\Form\ImageType;
 use App\Entity\ProjectWidget;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Component\Widgets\FormType\AbstractWidgetType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use App\Component\Widgets\FormType\Widget\AbstractWidgetType;
+use App\Component\Widgets\FormType\Data\ProjectWidgetDataType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ProjectWidgetType extends AbstractWidgetType
@@ -20,12 +15,14 @@ class ProjectWidgetType extends AbstractWidgetType
 	public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
-        
+		
         $builder
+			->add('data', CollectionType::class, [
+				'entry_type' => ProjectWidgetDataType::class,
+			])
 			->add('uploadedImage', ImageType::class, [
 				'mapped' => false,
 			])
-			->add('summary', TextareaType::class)
         ;
     }
 

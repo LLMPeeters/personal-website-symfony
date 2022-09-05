@@ -1,18 +1,9 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Browse widgets{% endblock %}
+{% block title %}Add progress widget{% endblock %}
 
 {% block main %}
-<h1>Add a widget</h1>
+	<h1>Add a widget</h1>
 
-{{ form_start(add_form) }}
-
-{{ form_row(add_form.title) }}
-{{ form_row(add_form.name) }}
-
-{{ form_row(add_form.progressBars) }}
-
-<input class="btn btn-primary" type="submit" value="Create widget">
-{{ form_end(add_form) }}
-
+	{% include 'admin/widgets/progress_widget_bread/formComponent.html.twig' with {'form': add_form, 'submitButtonText': 'Create widget'} %}
 {% endblock %}

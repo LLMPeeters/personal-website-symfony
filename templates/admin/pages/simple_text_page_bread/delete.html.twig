@@ -4,16 +4,8 @@
 
 {% block main %}
     <h1>Delete page</h1>
-    
-    <section>
-        <p>Title: {{ page.title }}</p>
-        <p>Name: {{ page.name }}</p>
-        <p>Route: {{ page.route }}</p>
-        <p>
-            Raw HTML:
-            {% include 'components/bootstrap/modal.html.twig' with {title: 'HTML', content: page.rawHtml} %}
-        </p>
-        
-        {{ form(delete_confirm_form) }}
-    </section>
+	
+	{% include 'admin/pages/simple_text_page_bread/readComponent.html.twig' with {'page': page, 'headingStartsAtNum': 2} %}
+	
+	{{ form(delete_confirm_form) }}
 {% endblock %}

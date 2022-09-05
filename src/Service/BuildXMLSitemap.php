@@ -29,10 +29,30 @@ class BuildXMLSitemap
 			
 			$repo = $this->doctrine->getRepository($type->value);
 			
+			// TODO: There should be a lastmod, which tracks when the page was last edited
 			foreach($repo->findAll() as $page) {
-				$pages[] = [
-					'loc' => $hostname.'/'.$page->getHotlink()->getRoute(),
-				];
+				$dataSet = $page->getData();
+				
+				foreach($dataSet as $data) {
+					$nextItem = [
+						'loc' => $hostname.'/'.$data->getSupportedLanguage()->getCountryCode().'/'.$data->getHotlink()->getRoute(),
+						'alternate' => [],
+					];
+					
+					foreach($dataSet as $altLink) {
+						if($data === $altLink) {
+							continue;
+						}
+						
+						$nextItem['alternate'][] = [
+							'rel' => 'alternate',
+							'hreflang' => $altLink->getSupportedLanguage()->getCountryCode(),
+							'href' => $hostname.'/'.$altLink->getSupportedLanguage()->getCountryCode().'/'.$altLink->getHotlink()->getRoute(),
+						];
+					}
+					
+					$pages[] = $nextItem;
+				}
 			}
 		}
 		

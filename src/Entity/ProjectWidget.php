@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Image;
 use App\Entity\AbstractWidget;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProjectWidgetRepository;
 
@@ -18,11 +20,16 @@ class ProjectWidget extends AbstractWidget
     #[ORM\OneToOne(targetEntity: Image::class, cascade: ['persist', 'remove'])]
     private $image;
 
-    #[ORM\Column(type: 'string', length: 500)]
-    private $summary;
-
     #[ORM\OneToOne(mappedBy: 'widget', targetEntity: Project::class, cascade: ['persist', 'remove'])]
     private $project;
+
+    #[ORM\OneToMany(mappedBy: 'widget', targetEntity: ProjectWidgetData::class, orphanRemoval: true)]
+    private $data;
+
+    public function __construct()
+    {
+        $this->data = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -41,18 +48,6 @@ class ProjectWidget extends AbstractWidget
         return $this;
     }
 
-    public function getSummary(): ?string
-    {
-        return $this->summary;
-    }
-
-    public function setSummary(string $summary): self
-    {
-        $this->summary = $summary;
-
-        return $this;
-    }
-
     public function getProject(): ?Project
     {
         return $this->project;
@@ -66,6 +61,36 @@ class ProjectWidget extends AbstractWidget
         }
 
         $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectWidgetData>
+     */
+    public function getData(): Collection
+    {
+        return $this->data;
+    }
+
+    public function addData(ProjectWidgetData $data): self
+    {
+        if (!$this->data->contains($data)) {
+            $this->data[] = $data;
+            $data->setWidget($this);
+        }
+
+        return $this;
+    }
+
+    public function removeData(ProjectWidgetData $data): self
+    {
+        if ($this->data->removeElement($data)) {
+            // set the owning side to null (unless already changed)
+            if ($data->getWidget() === $this) {
+                $data->setWidget(null);
+            }
+        }
 
         return $this;
     }

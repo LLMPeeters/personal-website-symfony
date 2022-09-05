@@ -1,0 +1,132 @@
+{# var int headingStartsAtNum #}
+{# var ComplexPage page #}
+
+{% set num = uniqueInt() %}
+<article class="detail border border-2">
+	<h{{ headingStartsAtNum }}>{{ page.identifier }}</h{{ headingStartsAtNum }}>
+	
+	<p class="user-select-none">
+		<a class="btn btn-outline-primary" href="{{ path('admin_complex_page_edit', {id: page.id}) }}" target="_SELF">
+			<span><i class="fa-solid fa-pencil"></i> Edit</span>
+		</a>
+		<a class="btn btn-outline-primary" href="{{ path('admin_complex_page_read', {id: page.id}) }}" target="_SELF">
+			<span><i class="fa-solid fa-magnifying-glass"></i> Details</span>
+		</a>
+		<a class="btn btn-outline-danger" href="{{ path('admin_complex_page_delete', {id: page.id}) }}" target="_SELF">
+			<span><i class="fa-solid fa-trash"></i> Delete</span>
+		</a>
+	</p>
+	
+	<ul class="list-group">
+		<li class="list-group-item">{{ page.public ? 'Public' : 'Private' }}</li>
+		<li class="list-group-item">{{ page.addToNav ? 'In the nav menu' : 'Not in the nav menu' }}</li>
+	</ul>
+	
+	<section>
+		{% for data in page.data %}
+			<div class="accordion" id="accordion-data-{{ num }}-{{ data.id }}">
+				<div class="accordion-item">
+					<h{{ headingStartsAtNum }} class="accordion-header" id="accordion-data-heading-{{ num }}-{{ data.id }}">
+						<button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ num }}-{{ data.id }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ num }}-{{ data.id }}">
+							{{ data.supportedLanguage.countryCode ~ ', ' ~ data.title }}
+						</button>
+					</h{{ headingStartsAtNum }}>
+					
+					<div id="accordion-data-collapse-{{ num }}-{{ data.id }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ num }}-{{ data.id }}" data-bs-parent="#accordion-data-{{ num }}-{{ data.id }}">
+						<div class="accordion-body">
+							<article>
+								<h{{ headingStartsAtNum + 1 }}>{{ data.title }}</h{{ headingStartsAtNum + 1 }}>
+								<p>{{ languageCode(data.supportedLanguage.countryCode) }}</p>
+								
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">Name</th>
+											<th scope="col">Data</th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr>
+											<td>Title</td>
+											<td>{{ data.title }}</td>
+										</tr>
+										<tr>
+											<td>Nav name</td>
+											<td>{{ data.navName }}</td>
+										</tr>
+										<tr>
+											<td>Route</td>
+											<td><a href="/{{ data.route }}" target="_BLANK">
+												{{ data.route }}
+												<i class="fa-solid fa-up-right-from-square"></i>
+											</a></td>
+										</tr>
+										<tr>
+										<tr>
+											<td>Elements</td>
+											<td>
+												<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#raw-html-{{ num }}-{{ data.id }}">
+													View
+												</button>
+												
+												<div class="modal fade" id="raw-html-{{ num }}-{{ data.id }}" tabindex="-1" aria-hidden="true">
+													<div class="modal-dialog modal-xl">
+														<div class="modal-content">
+															<div class="modal-body">
+																{% for element in data.elements %}
+																	<table class="table">
+																		<thead>
+																			<tr>
+																				<th scope="col">Element {{ loop.index }} name</th>
+																				<th scope="col">Element {{ loop.index }} data</th>
+																			</tr>
+																		</thead>
+																		
+																		</tbody>
+																			<tr>
+																				<td>Type</td>
+																				<td>{{ element.types }}</td>
+																			</tr>
+																			<tr>
+																				<td>Contents</td>
+																				<td>{{ element.content }}</td>
+																			</tr>
+																			<tr>
+																				<td>Widget (if applicable)</td>
+																				<td>
+																					{% if checkType(element.widgetChoices, 'string') %}
+																						{{ unserialize(element.widgetChoices).entityName }}
+																					{% else %}
+																						<p>None</p>
+																					{% endif %}
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																{% else %}
+																	<p>None!</p>
+																{% endfor %}
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</article>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<p class="alert alert-danger" role="alert">
+				No page data found!
+			</p>
+		{% endfor %}
+	</section>
+</article>

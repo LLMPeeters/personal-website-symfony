@@ -1,12 +1,7 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block main %}
-	{{ form_start(edit_form) }}
-		{{ form_row(edit_form.name) }}
-		{{ form_row(edit_form.hasCode) }}
-		{{ form_row(edit_form.page) }}
-		{{ form_row(edit_form.widget) }}
-
-		<input class="btn btn-primary" type="submit" value="Edit project">
-	{{ form_end(edit_form) }}
+	<h1>Edit project</h1>
+	
+	{% include 'admin/projects/bread/formComponent.html.twig' with {'form': edit_form, 'submitButtonText': 'Edit project'} %}
 {% endblock %}
