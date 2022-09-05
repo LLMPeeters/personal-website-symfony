@@ -10,7 +10,7 @@ var ProgressWidget = {
 			for(const container of containers) {
 				const percentage = container.getAttribute(this.percentageAttribute);
 				const bar = container.querySelector(`.${this.barClass}`);
-				console.log(container);
+				
 				bar.style.width = `${percentage}%`;
 			}
 		}

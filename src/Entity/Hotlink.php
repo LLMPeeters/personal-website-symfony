@@ -29,6 +29,10 @@ class Hotlink
     #[ORM\Column(type: 'string', length: 500)]
     private $pageDataNamespace;
 
+    #[ORM\ManyToOne(targetEntity: SupportedLanguage::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $supportedLanguage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +74,18 @@ class Hotlink
     public function setPageDataNamespace(string $pageDataNamespace): self
     {
         $this->pageDataNamespace = $pageDataNamespace;
+
+        return $this;
+    }
+
+    public function getSupportedLanguage(): ?SupportedLanguage
+    {
+        return $this->supportedLanguage;
+    }
+
+    public function setSupportedLanguage(?SupportedLanguage $supportedLanguage): self
+    {
+        $this->supportedLanguage = $supportedLanguage;
 
         return $this;
     }

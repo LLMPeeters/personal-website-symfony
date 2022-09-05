@@ -29,7 +29,6 @@ class BuildXMLSitemap
 			
 			$repo = $this->doctrine->getRepository($type->value);
 			
-			// TODO: There should be a lastmod, which tracks when the page was last edited
 			foreach($repo->findAll() as $page) {
 				$dataSet = $page->getData();
 				

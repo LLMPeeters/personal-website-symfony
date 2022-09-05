@@ -55,6 +55,7 @@ class CreateNewDataSets
 				$dataName = $pageType->getDataType();
 				
 				($newHotlink = new Hotlink())
+					->setSupportedLanguage($lang)
 					->setPageDataNamespace($pageType->getDataType())
 					->setPageNamespace($page::class);
 				

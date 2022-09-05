@@ -2,11 +2,11 @@
 
 <section class="project-widget widget">
 	<div class="image"{% if widgetData.widget.image is not null %}
-		style="background-image: url('{{ getEnv('PUBLIC_IMAGE_DIR')~'/'~widgetData.widget.image.fileName }}')"
+		style="background-image: url('/{{ getEnv('PUBLIC_IMAGE_DIR')~'/'~widgetData.widget.image.fileName }}')"
 	{% endif %}>
 		<p><a href="/{{ getProjectUrl(widgetData) }}">{{ widgetData.widget.project.name }}</a></p>
 		{% if widgetData.widget.project.hasCode %}
-			<p><a target="_BLANK" href="/{{ getEnv('PUBLIC_PROJECTS_DIR')~'/'~widgetData.widget.project.page.hotlink.route }}">Go to code</a></p>
+			<p><a target="_BLANK" href="/{{ getEnv('PUBLIC_PROJECTS_DIR')~'/'~widgetData.widget.project.identifier }}">Go to code</a></p>
 		{% endif %}
 	</div>
 	

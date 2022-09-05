@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AbstractPageDataType extends AbstractType
 {
@@ -21,6 +22,7 @@ class AbstractPageDataType extends AbstractType
 				'help' => 'This name will appear on short links and buttons.'
 			])
 			->add('hotlink', HotlinkType::class)
+			->add('metaDescription', TextareaType::class)
 		;
     }
 
