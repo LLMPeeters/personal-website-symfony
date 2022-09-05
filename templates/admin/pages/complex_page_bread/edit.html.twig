@@ -1,22 +1,19 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Browse pages{% endblock %}
+{% block title %}Edit complex page{% endblock %}
 
 {% block main %}
-<h1>Edit page</h1>
+	<h1>Edit page</h1>
 
-{{ form_start(edit_form) }}
+	{{ form_start(edit_form) }}
+		{{ form_row(edit_form.identifier) }}
+		{{ form_row(edit_form.public) }}
+		{{ form_row(edit_form.addToNav) }}
 
-{{ form_row(edit_form.title) }}
-{{ form_row(edit_form.name) }}
-{{ form_row(edit_form.addToNav) }}
+		{% for data in edit_form.data %}
+			{% include 'admin/pages/complex_page_bread/formComponent.html.twig' with {'data': data} %}
+		{% endfor %}
 
-{{ form_row(edit_form.hotlink) }}
-
-{{ form_row(edit_form.elements) }}
-
-<input class="btn btn-primary" type="submit" value="Confirm edit">
-
-{{ form_end(edit_form) }}
-
+		<input class="btn btn-primary" type="submit" value="Confirm edit">
+	{{ form_end(edit_form) }}
 {% endblock %}

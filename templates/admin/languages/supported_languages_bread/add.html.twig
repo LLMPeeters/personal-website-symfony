@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Add language{% endblock %}
+
+{% block main %}
+	<h1>Add a language</h1>
+	{{ form_start(add_form) }}
+		{{ form_row(add_form.countryCode) }}
+
+		<input type="submit" value="Add language">
+	{{ form_end(add_form) }}
+{% endblock %}

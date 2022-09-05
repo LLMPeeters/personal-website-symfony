@@ -13,7 +13,7 @@ class FileUploader
 		private SluggerInterface $slugger
 		) {}
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file): false|string
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
@@ -22,7 +22,7 @@ class FileUploader
         try {
             $file->move($this->getimageDirectory(), $fileName);
         } catch (FileException $e) {
-			dd($e);
+			return false;
         }
 
         return $fileName;

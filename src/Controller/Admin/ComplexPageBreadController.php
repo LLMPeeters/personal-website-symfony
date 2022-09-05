@@ -3,15 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ComplexPage;
-use App\Entity\SimpleTextPage;
+use App\Form\ConfirmationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ComplexPageRepository;
-use App\Repository\SimpleTextPageRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Component\Pages\FormType\ComplexPageType;
-use App\Component\Pages\FormType\SimpleTextPageType;
+use App\Component\Pages\FormType\Page\ComplexPageType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -61,13 +59,16 @@ class ComplexPageBreadController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
-            $page->getHotlink()->setpageNamespace(ComplexPage::class);
-            
-            $em->persist($page);
-            $em->persist($page->getHotlink());
-            $em->flush();
-            
-            return $this->redirectToRoute('admin_complex_page_read', ['id' => $page->getId()]);
+			foreach($page->getData() as $data) {
+				$em->persist($data->getHotlink());
+				$em->persist($data);
+			}
+			
+			$em->persist($page);
+			
+			$em->flush();
+			
+			return $this->redirectToRoute('admin_complex_page_read', ['id' => $page->getId()]);
         }
         
         return $this->render('admin/pages/complex_page_bread/add.html.twig', [
@@ -78,19 +79,17 @@ class ComplexPageBreadController extends AbstractController
     #[Route('/delete/{id}', name: 'admin_complex_page_delete')]
     public function delete(Request $request, EntityManagerInterface $em, ComplexPage $page): Response
     {
-        $form = ($this->createFormBuilder())
-            ->add('confirm', SubmitType::class, [
-                'label' => 'Confirm deletion?',
-                'attr' => [
-                    'class' => 'btn btn-danger',
-                ],
-            ])
-            ->getForm()
-        ;
+		$form = $this->createForm(ConfirmationType::class);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()) {
+			foreach($page->getData() as $data) {
+				$em->remove($data->getHotlink());
+				$em->remove($data);
+			}
+			
             $em->remove($page);
+			
             $em->flush();
             
             return $this->redirectToRoute('admin_complex_page_browse');

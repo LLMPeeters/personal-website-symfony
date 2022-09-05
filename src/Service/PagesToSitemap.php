@@ -4,6 +4,7 @@ namespace App\Service;
 
 use LogicException;
 use App\Entity\AbstractPage;
+use App\Entity\SupportedLanguage;
 use App\Component\Pages\PageTypeEnum;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -13,24 +14,24 @@ class PagesToSitemap
 		private ManagerRegistry $doctrine
 	) {}
 	
-	public function getSitemapArray(): array
+	public function getSitemapArray(SupportedLanguage $lang): array
 	{
-		$pages = [];
+		$dataArray = [];
 		
 		foreach(PageTypeEnum::cases() as $type) {
 			if(!is_subclass_of($type->value, AbstractPage::class)) {
 				throw new LogicException(PageTypeEnum::class.' is out of order.');
 			}
 			
-			$repo = $this->doctrine->getRepository($type->value);
+			$repo = $this->doctrine->getRepository($type->getDataType());
 			
-			foreach($repo->findAll() as $page) {
-				$pages[$page->getHotlink()->getRoute()] = $page->getName();
+			foreach($repo->findBy(['supportedLanguage' => $lang]) as $data) {
+				$dataArray[$data->getRoute()] = $data->getTitle();
 			}
 		}
 		
-		ksort($pages);
+		ksort($dataArray);
 		
-		return $pages;
+		return $dataArray;
 	}
 }

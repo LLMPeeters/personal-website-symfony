@@ -1,19 +1,9 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Browse widgets{% endblock %}
+{% block title %}Edit progress widget{% endblock %}
 
 {% block main %}
-<h1>Edit widget</h1>
+	<h1>Edit widget</h1>
 
-{{ form_start(edit_form) }}
-
-{{ form_row(edit_form.title) }}
-{{ form_row(edit_form.name) }}
-
-{{ form_row(edit_form.progressBars) }}
-
-<input class="btn btn-primary" type="submit" value="Confirm edit">
-
-{{ form_end(edit_form) }}
-
+	{% include 'admin/widgets/progress_widget_bread/formComponent.html.twig' with {'form': edit_form, 'submitButtonText': 'Edit widget'} %}
 {% endblock %}

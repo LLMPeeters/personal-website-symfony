@@ -1,0 +1,27 @@
+{# var string submitButtonText #}
+{# var FormView form #}
+
+{% set num = uniqueInt() %}
+{{ form_start(form) }}
+	{{ form_row(form.identifier) }}
+	{% for data in form.data %}
+		<div class="accordion" id="accordion-data-{{ num }}-{{ loop.index }}">
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="accordion-data-heading-{{ num }}-{{ loop.index }}">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-data-collapse-{{ num }}-{{ loop.index }}" aria-expanded="true" aria-controls="accordion-data-collapse-{{ num }}-{{ loop.index }}">
+						{{ data.vars.data.supportedLanguage.countryCode ~ ', ' ~ data.vars.data.title }}
+					</button>
+				</h2>
+				
+				<div id="accordion-data-collapse-{{ num }}-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="accordion-data-heading-{{ num }}-{{ loop.index }}" data-bs-parent="#accordion-data-{{ num }}-{{ loop.index }}">
+					<div class="accordion-body">
+						{{ form_row(data.title) }}
+						{{ form_row(data.progressBars) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	
+	<input class="btn btn-primary" type="submit" value="{{ submitButtonText }}">
+{{ form_end(form) }}

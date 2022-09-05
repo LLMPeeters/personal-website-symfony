@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Component\Pages\FormType;
+namespace App\Component\Pages\FormType\Page;
 
-use App\Form\HotlinkType;
 use App\Entity\SimpleTextPage;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Component\Pages\FormType\Page\AbstractPageType;
+use App\Component\Pages\FormType\Data\SimpleTextPageDataType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class SimpleTextPageType extends AbstractPageType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        parent::buildForm($builder, $options);
-        
-        $builder
-            ->add('rawHtml', TextareaType::class, [
-                'required' => false,
-            ])
-        ;
+		parent::buildForm($builder, $options);
+		
+		$builder
+			->add('data', CollectionType::class, [
+				'entry_type' => SimpleTextPageDataType::class,
+			])
+		;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

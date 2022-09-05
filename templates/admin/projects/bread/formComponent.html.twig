@@ -1,0 +1,36 @@
+{# var string submitButtonText #}
+{# var FormView form #}
+
+{{ form_start(form) }}
+	<fieldset>
+		<legend>Project information</legend>
+		
+		{{ form_row(form.name) }}
+		{{ form_row(form.hasCode) }}
+	</fieldset>
+	
+	<fieldset>
+		<legend>Project widget</legend>
+		
+		{{ form_row(form.widget.identifier) }}
+		{{ form_row(form.widget.uploadedImage) }}
+		
+		{% for data in form.widget.data %}
+			{% include 'admin/widgets/project_widget_bread/formComponent.html.twig' with {'data': data, 'form': form} %}
+		{% endfor %}
+	</fieldset>
+	
+	<fieldset>
+		<legend>Page</legend>
+		
+		{{ form_row(form.page.identifier) }}
+		{{ form_row(form.page.addToNav) }}
+		{{ form_row(form.page.public) }}
+		
+		{% for data in form.page.data %}
+			{% include 'admin/pages/complex_page_bread/formComponent.html.twig' with {'data': data} %}
+		{% endfor %}
+	</fieldset>
+
+	<input class="btn btn-primary" type="submit" value="{{ submitButtonText }}">
+{{ form_end(form) }}
