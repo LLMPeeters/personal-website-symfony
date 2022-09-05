@@ -3,7 +3,7 @@
 
 <article class="detail border border-2">
 	<section>
-		<h{{ headingStartsAtNum }}>{{ project.name }}</h{{ headingStartsAtNum }}>
+		<h{{ headingStartsAtNum }}>{{ project.identifier }}</h{{ headingStartsAtNum }}>
 		
         <p>
             <a class="btn btn-outline-primary" href="{{ path('admin_project_edit', {id: project.id}) }}" target="_SELF">
@@ -18,6 +18,7 @@
         </p>
 		
 		<ul class="list-group">
+			<li class="list-group-item">{{ project.name }}</li>
 			<li class="list-group-item">{{ project.hasCode ? 'Has code' : 'Does not have code' }}</li>
 		</ul>
 	</section>
