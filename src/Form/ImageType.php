@@ -27,20 +27,5 @@ class ImageType extends AbstractType
 				'mapped' => false,
 			])
 		;
-		
-		// $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) {
-		// 	$data = $event->getData();
-		// 	$form = $event->getForm();
-		// 	dd($form->getParent()->getData());
-		// 	if($data instanceof UploadedFile) {
-		// 		$newImage = new Image();
-		// 		dd($event->getParent()->getData());
-		// 		$newImage->setFileName($this->fileUploader->upload($data['image']));
-				
-		// 		$event->setData(['image' => $newImage]);
-				
-				
-		// 	}
-		// });
     }
 }

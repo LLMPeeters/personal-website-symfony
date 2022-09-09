@@ -1,6 +1,6 @@
 .project-widget {
 	display: flex;
-	flex-flow: row nowrap;
+	flex-flow: column nowrap;
 	width: 100%;
 }
 
@@ -9,12 +9,37 @@
 	height: 192px;
 	width: 256px;
 	border-radius: 2px;
-	background-color: lightgray;
 	background-image: url("../images/image.svg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
 	overflow: hidden;
+	align-self: center;
+}
+
+.project-widget div.image::before {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	left: 24px;
+	top: 24px;
+	width: calc(100% - 48px);
+	height: calc(100% - 48px);
+	background-image: url("../images/image.svg");
+	background-color: lightgray;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+.project-widget div.image::after {
+	content: '';
+	position: absolute;
+	z-index: -2;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: lightgray;
 }
 
 .project-widget div.image p {
@@ -103,4 +128,10 @@
 }
 .progress-widget>div:hover>div>div>p {
 	display: block;
+}
+
+@media screen and (min-width: 600px) {
+	.project-widget {
+		flex-flow: row nowrap;
+	}
 }
