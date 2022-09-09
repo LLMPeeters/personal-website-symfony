@@ -99,11 +99,15 @@ class ProjectBreadController extends AbstractController
 				->getData();
 			
 			if($newImage instanceof UploadedFile) {
-				($image = new Image())
-					->setFileName($fileUploader->upload($newImage));
-				$widget->setImage($image);
-				
-				$em->persist($image);
+				if($fileName = $fileUploader->upload($newImage)) {
+					($image = new Image())
+						->setFileName($fileName);
+					$widget->setImage($image);
+					
+					$em->persist($image);
+				} else {
+					$widget->setImage(null);
+				}
 			}
 			
 			foreach($page->getData() as $data) {

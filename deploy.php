@@ -20,11 +20,14 @@ task('npm:run:build', function() {
 	cd('{{ release_path }}');
 	run('npm run build');
 });
-task('bloop', function() {
-	return;
+task('permissions:images_dir', function() {
+	cd('{{ release_path }}');
+	run('chmod u=gwx,g=gwx,o= public/images/');
+	run('chgrp www-data public/images/');
 });
 
 // Hooks
 after('deploy:failed', 'deploy:unlock');
 after('deploy:vendors', 'npm:install');
 after('npm:install', 'npm:run:build');
+after('npm:run:build', 'permissions:images_dir');
