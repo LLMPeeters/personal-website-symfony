@@ -54,17 +54,20 @@ class ProjectBreadController extends AbstractController
 				->getData();
 			
 			if($potentialImage instanceof UploadedFile) {
-				$newImage = new Image();
-				
-				$newImage->setFileName($fileUploader->upload($potentialImage));
-				
-				if(($oldImage = $project->getWidget()->getImage()) instanceof Image) {
-					$fileRemover->remove($imageDirectory.'/'.$oldImage->getFileName());
+				// fileName can never be falsy, except when something went wrong.
+				if($fileName = $fileUploader->upload($potentialImage)) {
+					$newImage = new Image();
+					$newImage->setFileName($fileName);
 					
-					$em->remove($oldImage);
+					// If an old image exists, delete it
+					if(($oldImage = $project->getWidget()->getImage()) instanceof Image) {
+						$fileRemover->remove($imageDirectory.'/'.$oldImage->getFileName());
+						
+						$em->remove($oldImage);
+					}
+					
+					$widget->setImage($newImage);
 				}
-				
-				$widget->setImage($newImage);
 				
 				$em->persist($newImage);
 			}
