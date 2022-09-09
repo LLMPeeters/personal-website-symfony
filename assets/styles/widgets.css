@@ -6,10 +6,10 @@
 
 .project-widget div.image {
 	position: relative;
+	min-width:192px;
 	height: 192px;
 	width: 256px;
 	border-radius: 2px;
-	background-image: url("../images/image.svg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;

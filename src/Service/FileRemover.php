@@ -11,7 +11,7 @@ class FileRemover
 		$fs = new Filesystem();
 		
 		// If upload went wrong, then fileName could be falsy
-		if($fileName !== '' && $fs->exists($fileName)) {
+		if(preg_match('/\.(?=[a-zA-Z]{3,4}$)/', $fileName) && $fs->exists($fileName)) {
 			try {
 				$fs->remove($fileName);
 				
