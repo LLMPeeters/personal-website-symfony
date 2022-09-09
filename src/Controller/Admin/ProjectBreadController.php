@@ -67,9 +67,9 @@ class ProjectBreadController extends AbstractController
 					}
 					
 					$widget->setImage($newImage);
+					
+					$em->persist($newImage);
 				}
-				
-				$em->persist($newImage);
 			}
 			
 			$em->flush();

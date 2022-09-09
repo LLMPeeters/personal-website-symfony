@@ -6,7 +6,7 @@
 
 .project-widget div.image {
 	position: relative;
-	min-width:192px;
+	min-width:256px;
 	height: 192px;
 	width: 256px;
 	border-radius: 2px;
