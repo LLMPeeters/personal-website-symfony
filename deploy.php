@@ -22,7 +22,7 @@ task('npm:run:build', function() {
 });
 task('permissions:images_dir', function() {
 	cd('{{ release_path }}');
-	run('chmod u=gwx,g=gwx,o= public/images/');
+	run('chmod u=rwx,g=rwx,o= public/images/');
 	run('chgrp www-data public/images/');
 });
 
