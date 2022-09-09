@@ -44,7 +44,7 @@ enum LanguagesEnum: string
 	case cs = 'Czech';
 	case da = 'Danish';
 	case dv = 'Divehi, Dhivehi, Maldivian';
-	case nl = 'Dutch, Flemish';
+	case nl = 'Nederlands';
 	case dz = 'Dzongkha';
 	case en = 'English';
 	case eo = 'Esperanto';
