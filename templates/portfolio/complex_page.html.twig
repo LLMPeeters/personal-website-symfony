@@ -7,7 +7,7 @@
 			{% if isWidget(element.types) %}
 				{% include 'components/widgets/widget.html.twig' with {'widget': getWidget(element.widgetChoices)} %}
 			{% else %}
-				<{{ element.types }}>{{ element.content }}</{{ element.types }}>
+				<{{ element.types }}>{{ element.content|raw }}</{{ element.types }}>
 			{% endif %}
 		{% endfor %}
     </section>
